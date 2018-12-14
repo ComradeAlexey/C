@@ -82,34 +82,161 @@ struct db dbEnterData()
 	struct db _db;
 	//ввод IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
-	int a;
+	int a = 0, isString = 0, isNull1, isNull2;
 	do
 	{
+		a = 0;
+		isString = 0;
+		char str[3];
 		printf("Enter 1 part IP = ");
-		scanf("%d", &a);
+		scanf("%3s", &str);
+		fseek(stdin, 0, SEEK_END);
+		for (int i = 0; i < 3; i++)
+		{
+			
+			if (str[i] == '\0')
+			{
+				i = 3;
+			}
+			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+			{
+				isString = 1;
+			}
+		}
+		if (isString == 0)
+		{
+			if (str[1] == '\0')
+			{
+				a += str[0] - '0';
+			}
+			else if (str[2] == '\0')
+			{
+				a += ((str[0] - '0') * 10) + (str[1] - '0');
+			}
+			else
+			{
+				a += (((str[0] - '0') * 100) +((str[1] - '0') * 10) + (str[2] - '0'));
+			}
+		}
+		
 		_db._ip.oneCell = a;
-	} while (a < 0 || a > 255);
+	} while (a < 0 || a > 255 || !isString == 0);
 
 	do
 	{
+		a = 0;
+		isString = 0;
+		char str[3];
 		printf("Enter 2 part IP = ");
-		scanf("%d", &a);
+		scanf("%3s", &str);
+		fseek(stdin, 0, SEEK_END);
+		for (int i = 0; i < 3; i++)
+		{
+
+			if (str[i] == '\0')
+			{
+				i = 3;
+			}
+			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+			{
+				isString = 1;
+			}
+		}
+		if (isString == 0)
+		{
+			if (str[1] == '\0')
+			{
+				a += str[0] - '0';
+			}
+			else if (str[2] == '\0')
+			{
+				a += ((str[0] - '0') * 10) + (str[1] - '0');
+			}
+			else
+			{
+				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+			}
+		}
+
 		_db._ip.twoCell = a;
-	} while (a < 0 || a > 255);
-
+	} while (a < 0 || a > 255 || !isString == 0);
 	do
 	{
+		a = 0;
+		isString = 0;
+		char str[3];
 		printf("Enter 3 part IP = ");
-		scanf("%d", &a);
+		scanf("%3s", &str);
+		fseek(stdin, 0, SEEK_END);
+		for (int i = 0; i < 3; i++)
+		{
+
+			if (str[i] == '\0')
+			{
+				i = 3;
+			}
+			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+			{
+				isString = 1;
+			}
+		}
+		if (isString == 0)
+		{
+			if (str[1] == '\0')
+			{
+				a += str[0] - '0';
+			}
+			else if (str[2] == '\0')
+			{
+				a += ((str[0] - '0') * 10) + (str[1] - '0');
+			}
+			else
+			{
+				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+			}
+		}
+
 		_db._ip.threeCell = a;
-	} while (a < 0 || a > 255);
+	} while (a < 0 || a > 255 || !isString == 0);
 
 	do
 	{
+		a = 0;
+		isString = 0;
+		char str[3];
 		printf("Enter 4 part IP = ");
-		scanf("%d", &a);
+		scanf("%3s", &str);
+		fseek(stdin, 0, SEEK_END);
+		for (int i = 0; i < 3; i++)
+		{
+
+			if (str[i] == '\0')
+			{
+				i = 3;
+			}
+			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+			{
+				isString = 1;
+			}
+		}
+		if (isString == 0)
+		{
+			if (str[1] == '\0')
+			{
+				a += str[0] - '0';
+			}
+			else if (str[2] == '\0')
+			{
+				a += ((str[0] - '0') * 10) + (str[1] - '0');
+			}
+			else
+			{
+				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+			}
+		}
+
 		_db._ip.fourCell = a;
-	} while (a < 0 || a > 255);
+	} while (a < 0 || a > 255 || !isString == 0);
 	fseek(stdin, 0, SEEK_END);
 
 	printf("Enter Name User p.s. only a,b,c... and 1,2,3 other symbols delete! = ");
@@ -369,6 +496,7 @@ void EditElement(struct list *head)
 		printf("Enter you choice = ");
 		int choice;
 		int type;
+		int a = 0, isString = 0;
 		scanf("%d", &choice);
 		switch (choice)
 		{
@@ -386,36 +514,166 @@ void EditElement(struct list *head)
 			case 1:
 				do
 				{
+					a = 0;
+					isString = 0;
+					char str[3];
 					printf("Enter 1 part IP = ");
-					scanf("%d", &a);
+					scanf("%3s", &str);
+					fseek(stdin, 0, SEEK_END);
+					for (int i = 0; i < 3; i++)
+					{
+
+						if (str[i] == '\0')
+						{
+							i = 3;
+						}
+						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+						{
+							isString = 1;
+						}
+					}
+					if (isString == 0)
+					{
+						if (str[1] == '\0')
+						{
+							a += str[0] - '0';
+						}
+						else if (str[2] == '\0')
+						{
+							a += ((str[0] - '0') * 10) + (str[1] - '0');
+						}
+						else
+						{
+							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+						}
+					}
+
 					cur->_db._ip.oneCell = a;
-				} while (a < 0 || a > 255);
+				} while (a < 0 || a > 255 || !isString == 0);
 				break;
 			case 2:
 				do
 				{
+					a = 0;
+					isString = 0;
+					char str[3];
 					printf("Enter 2 part IP = ");
-					scanf("%d", &a);
+					scanf("%3s", &str);
+					fseek(stdin, 0, SEEK_END);
+					for (int i = 0; i < 3; i++)
+					{
+
+						if (str[i] == '\0')
+						{
+							i = 3;
+						}
+						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+						{
+							isString = 1;
+						}
+					}
+					if (isString == 0)
+					{
+						if (str[1] == '\0')
+						{
+							a += str[0] - '0';
+						}
+						else if (str[2] == '\0')
+						{
+							a += ((str[0] - '0') * 10) + (str[1] - '0');
+						}
+						else
+						{
+							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+						}
+					}
+
 					cur->_db._ip.twoCell = a;
-				} while (a < 0 || a > 255);
+				} while (a < 0 || a > 255 || !isString == 0);
 				break;
 			case 3:
 				do
 				{
+					a = 0;
+					isString = 0;
+					char str[3];
 					printf("Enter 3 part IP = ");
-					scanf("%d", &a);
+					scanf("%3s", &str);
+					fseek(stdin, 0, SEEK_END);
+					for (int i = 0; i < 3; i++)
+					{
+
+						if (str[i] == '\0')
+						{
+							i = 3;
+						}
+						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+						{
+							isString = 1;
+						}
+					}
+					if (isString == 0)
+					{
+						if (str[1] == '\0')
+						{
+							a += str[0] - '0';
+						}
+						else if (str[2] == '\0')
+						{
+							a += ((str[0] - '0') * 10) + (str[1] - '0');
+						}
+						else
+						{
+							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+						}
+					}
+
 					cur->_db._ip.threeCell = a;
-				} while (a < 0 || a > 255);
+				} while (a < 0 || a > 255 || !isString == 0);
 				break;
 			case 4:
 				do
 				{
+					a = 0;
+					isString = 0;
+					char str[3];
 					printf("Enter 4 part IP = ");
-					scanf("%d", &a);
+					scanf("%3s", &str);
+					fseek(stdin, 0, SEEK_END);
+					for (int i = 0; i < 3; i++)
+					{
+
+						if (str[i] == '\0')
+						{
+							i = 3;
+						}
+						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+						{
+							isString = 1;
+						}
+					}
+					if (isString == 0)
+					{
+						if (str[1] == '\0')
+						{
+							a += str[0] - '0';
+						}
+						else if (str[2] == '\0')
+						{
+							a += ((str[0] - '0') * 10) + (str[1] - '0');
+						}
+						else
+						{
+							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+						}
+					}
+
 					cur->_db._ip.fourCell = a;
-				} while (a < 0 || a > 255);
+				} while (a < 0 || a > 255 || !isString == 0);
+				fseek(stdin, 0, SEEK_END);
 				break;
-				
+
+
 			}
 			fseek(stdin, 0, SEEK_END);
 			break;
