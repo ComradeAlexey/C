@@ -161,52 +161,58 @@ struct db dbEnterData()
 
 
 //добавление элемента между элементами
-struct list * addelem(struct list *head) {
+void addelem(struct list *head) {
 	
 	struct list *temp, *p, *cur =NULL;
 	int i = 0,a = -1;
 	fseek(stdin, 0, SEEK_END);
-	do
+	if (head->next != NULL)
 	{
-printf("\nEnter the element after which you want to add the element = ");
-scanf("%d", &a);
-	} while (a == -1);
-	
-	if(a>0)
-	{
-		while (i < a & cur->next != NULL)
+		do
 		{
-			cur = cur->next;
-			i++;
+			printf("\nEnter the element after which you want to add the element = ");
+			scanf("%d", &a);
+		} while (a == -1);
+		cur = head;
+		if (a > 0)
+		{
+			while (i < a & cur->next != NULL)
+			{
+				cur = cur->next;
+				i++;
+			}
+		}
+		if (cur->next != NULL)
+		{
+			if (i == a)
+			{
+				struct db newItem = dbEnterData();
+				temp = (struct list*)malloc(sizeof(struct list));
+				p = cur->next; // сохранение указателя на следующий узел
+				cur->next = temp; // предыдущий узел указывает на создаваемый
+				temp->_db = newItem; // сохранение поля данных добавляемого узла
+				temp->next = p; // созданный узел указывает на следующий узел
+				temp->prev = cur; // созданный узел указывает на предыдущий узел
+				if (p != NULL)
+					p->prev = temp;
+			}
+			else
+			{
+				printf("Not element #%d", a - 1);
+			}
+		}
+		else
+		{
+			printf("Not element #%d", a - 1);
 		}
 	}
-	else
-	{
-		cur = head;
+	else {
+		printf("This element == head!!! & head->next = NULL!!!!");
 	}
-
-	if (i == a)
-	{
-		struct db newItem = dbEnterData();
-		temp = (struct list*)malloc(sizeof(struct list));
-		p = cur->next; // сохранение указателя на следующий узел
-		cur->next = temp; // предыдущий узел указывает на создаваемый
-		temp->_db = newItem; // сохранение поля данных добавляемого узла
-		temp->next = p; // созданный узел указывает на следующий узел
-		temp->prev = cur; // созданный узел указывает на предыдущий узел
-		if (p != NULL)
-			p->prev = temp;
-	}
-	else
-	{
-		printf("Not element #%d", a - 1);
-	}
-
-	return(temp);
 }
 
 //добавление элемента между элементами
-struct list * addElemToEnd(struct list *head) {
+void addElemToEnd(struct list *head) {
 
 	struct list *temp, *cur;
 
@@ -223,8 +229,7 @@ struct list * addElemToEnd(struct list *head) {
 	cur->next = temp; // предыдущий узел указывает на создаваемый
 	temp->_db = newItem; // сохранение поля данных добавляемого узла
 	temp->prev = cur; // созданный узел указывает на предыдущий узел
-
-	return(temp);
+	temp->next = NULL;
 }
 
 void deletelem(struct list *lst) {
@@ -272,7 +277,7 @@ void DeleteEndElement(struct list *root)
 	}
 	if (cur != root)
 	{
-		cur->prev = NULL;
+		cur->prev->next = NULL;
 		free(cur);
 		printf("Element deleting!");
 	}
@@ -282,15 +287,14 @@ void DeleteEndElement(struct list *root)
 	}
 }
 
-void deletehead(struct list *root) {
+struct list * deleteHead(struct list *root) {
 	struct list *temp;
 	if (root->next != NULL)
 	{
 		temp = root->next;
-		temp->prev = NULL;
-		free(root);   // освобождение памяти текущего корня
-		root = temp;
+		free(root);
 		printf("Element deleting!");
+		return temp;
 	}
 	else
 	{
@@ -471,11 +475,16 @@ void EditElement(struct list *head)
 void listPrint(struct list *lst) {
 	struct list *p;
 	p = lst;
-	do {
+	while(p != NULL)
+	{
 		dbPrint(p->_db); // вывод значения элемента p
-		p = p->next; // переход к следующему узлу
-	} while (p != NULL); // условие окончания обхода
+		if (p->next != NULL)
+			p = p->next; // переход к следующему узлу
+		else
+			return;
+	}
 }
+
 void Menu(struct list *head)
 {
 	while (1)
@@ -532,7 +541,7 @@ void Menu(struct list *head)
 				DeleteEndElement(head);
 				break;
 			case 6:
-				deletehead(head);
+				head = deleteHead(head);
 				break;
 			case 7:
 				listPrint(head);
@@ -547,7 +556,7 @@ void Menu(struct list *head)
 }
 int main()
 {
-	struct list *head = NULL/* "голова" листа*/, *cur;
+	struct list *head = NULL/* "голова" листа*/;
 	Menu(head);
 	return 0;
 }
