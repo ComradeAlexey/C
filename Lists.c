@@ -3,6 +3,7 @@
 #include <malloc.h>
 struct TypePC *typesPC = NULL;
 int lenghtTypesPC = 0;
+int lenghtLists = 0;
 struct ip
 {
 	unsigned char oneCell;//первая ячейка адресса
@@ -42,6 +43,7 @@ struct list * init(struct db a)  // а - значение первого узла
 	lst->_db = a;
 	lst->next = NULL; // указатель на следующий узел
 	lst->prev = NULL; // указатель на предыдущий узел
+	lenghtLists++;
 	return(lst);
 }
 
@@ -287,19 +289,58 @@ struct db dbEnterData()
 	else
 	{
 		char choice = '0';
+		int b = 0;
 		do
 		{
 			printf("\nХотите ли Вы добавить новый тип ПК? Если да то введите Y(y), иначе N(n) = ");
 			scanf("%c", &choice);
-		} while (choice == 'y' || choice == 'Y' || choice == 'n' || choice == 'N');
+			fseek(stdin, 0, SEEK_END);
+			switch (choice)
+			{
+			case 'N':
+				b = 1;
+				break;
+			case 'n':
+				b = 1;
+				break;
+			case 'y':
+				b = 1;
+				break;
+			case 'Y':
+				b = 1;
+				break;
+			default:
+				b = 0;
+				break;
+			}
+		} while (b == 0);
 		if (choice == 'y' || choice == 'Y')
 		{
 			AddInListTypePC();
 			do
 			{
 				printf("\nХотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип? Если да то введите Y(y), иначе N(n) = ");
-				scanf("%c", &choice);
-			} while (choice == 'y' || choice == 'Y' || choice == 'n' || choice == 'N');
+				scanf("%c", &choice); 
+				fseek(stdin, 0, SEEK_END);
+				switch (choice)
+				{
+				case 'N':
+					b = 1;
+					break;
+				case 'n':
+					b = 1;
+					break;
+				case 'y':
+					b = 1;
+					break;
+				case 'Y':
+					b = 1;
+					break;
+				default:
+					b = 0;
+					break;
+				}
+			} while (b == 0);
 			if (choice == 'y' || choice == 'Y')
 			{
 				_db.typePC = typesPC[lenghtTypesPC-1];
@@ -326,7 +367,7 @@ struct db dbEnterData()
 			printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
 			for (int i = 0; i < lenghtTypesPC; i++)
 			{
-				printf("\n%d) %s", i, typesPC[i]);
+				printf("\n%d) %s", i, typesPC[i].nameType);
 			}
 			do
 			{
@@ -376,6 +417,7 @@ void addelem(struct list *head) {
 				temp->prev = cur; // созданный узел указывает на предыдущий узел
 				if (p != NULL)
 					p->prev = temp;
+				lenghtLists++;
 			}
 			else
 			{
@@ -411,6 +453,7 @@ void addElemToEnd(struct list *head) {
 	temp->_db = newItem; // сохранение поля данных добавляемого узла
 	temp->prev = cur; // созданный узел указывает на предыдущий узел
 	temp->next = NULL;
+	lenghtLists++;
 }
 
 void deletelem(struct list *lst) {
@@ -437,6 +480,7 @@ void deletelem(struct list *lst) {
 			if (next != NULL)
 				next->prev = cur->prev; // переставляем указатель
 			free(cur); // освобождаем память удаляемого элемента
+			lenghtLists--;
 		}
 		else
 		{
@@ -461,6 +505,7 @@ void DeleteEndElement(struct list *root)
 		cur->prev->next = NULL;
 		free(cur);
 		printf("Element deleting!");
+		lenghtLists--;
 	}
 	else
 	{
@@ -475,11 +520,13 @@ struct list * deleteHead(struct list *root) {
 		temp = root->next;
 		free(root);
 		printf("Element deleting!");
+		lenghtLists--;
 		return temp;
 	}
 	else
 	{
 		printf("Only head there is in the list!!!");
+		return temp;
 	}
 }
 
@@ -843,7 +890,16 @@ struct list * swap(struct list *lst1, struct list *lst2, struct list *head)
 
 void SortByName(struct list *head)
 {
+	struct list *p = head;
 	int index = 0;
+	while (index - 1 < lenghtLists)
+	{
+		if (p->_db.name_user[0] > p->next->_db.name_user[0])
+		{
+			head = swap(p, p->next, head);
+		}
+		p = p->next;
+	}
 }
 
 void Menu(struct list *head)
@@ -881,7 +937,8 @@ void Menu(struct list *head)
 			printf("5)Delete end element\n");
 			printf("6)Delete head element\n");
 			printf("7)Print list's\n");
-			printf("8)Exit\nEnter = ");
+			printf("8)Сортировка по имени\n");
+			printf("9)Exit\nEnter = ");
 			int choice;
 			scanf("%d", &choice);
 			switch (choice)
@@ -908,6 +965,9 @@ void Menu(struct list *head)
 				listPrint(head);
 				break;
 			case 8:
+				SortByName(head);
+				break;
+			case 9:
 				return;
 				break;
 			}
