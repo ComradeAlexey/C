@@ -1,50 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+struct TypePC *typesPC = NULL;
+int lenghtTypesPC = 0;
 struct ip
 {
-	unsigned char oneCell;//РїРµСЂРІР°СЏ СЏС‡РµР№РєР° Р°РґСЂРµСЃСЃР°
-	unsigned char twoCell;//РІС‚РѕСЂР°СЏ СЏС‡РµР№РєР° Р°РґСЂРµСЃСЃР°
-	unsigned char threeCell;//С‚СЂРµС‚СЊСЏ СЏС‡РµР№РєР° Р°РґСЂРµСЃСЃР°
-	unsigned char fourCell;//С‡РµС‚РІС‘СЂС‚Р°СЏ СЏС‡РµР№РєР° Р°РґСЂРµСЃСЃР°
+	unsigned char oneCell;//первая ячейка адресса
+	unsigned char twoCell;//вторая ячейка адресса
+	unsigned char threeCell;//третья ячейка адресса
+	unsigned char fourCell;//четвёртая ячейка адресса
 };
 
-enum TypePC
+struct TypePC
 {
-	one,
-	two,
-	three
+	char nameType[10];
 };
 
 struct db
 {
-	struct ip _ip;//СЃС‚СЂСѓРєС‚СѓСЂР° ip Р°РґСЂРµСЃСЃР°, СЃРѕСЃС‚РѕРёС‚ РёР· С‡РµС‚С‹СЂС‘С… РїРµСЂРµРјРµРЅРЅС‹С…, РєР°Р¶РґР°СЏ РёР· РєРѕС‚РѕСЂС‹С… РѕС‚РІРµС‡Р°РµС‚ Р·Р° СЃРІРѕСЋ СЏС‡РµР№РєСѓ Р°РґСЂРµСЃСЃР°
-	char name_pc[10];//РЅР°Р·РІР°РЅРёРµ РџРљ
-	char name_user[10];//РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-	char surname_user[10];//Р¤Р°РјРёР»РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-	char groupe_user[5];//РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹
-	enum TypePC typePC;//РўРёРї РџРљ
+	struct ip _ip;//структура ip адресса, состоит из четырёх переменных, каждая из которых отвечает за свою ячейку адресса
+	char name_pc[10];//название ПК
+	char name_user[10];//Имя пользователя
+	char surname_user[10];//Фамилия пользователя
+	char groupe_user[5];//Название группы
+	struct TypePC typePC;//Тип ПК
 };
 
 struct list
 {
-	struct db _db; // РїРѕР»Рµ РґР°РЅРЅС‹С…
-	struct list *next; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
-	struct list *prev; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СЌР»РµРјРµРЅС‚
+	struct db _db; // поле данных
+	struct list *next; // указатель на следующий элемент
+	struct list *prev; // указатель на предыдущий элемент
 };
 
-struct list * init(struct db a)  // Р° - Р·РЅР°С‡РµРЅРёРµ РїРµСЂРІРѕРіРѕ СѓР·Р»Р°
+struct list * init(struct db a)  // а - значение первого узла
 {
 	struct list *lst;
-	// РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РїРѕРґ РєРѕСЂРµРЅСЊ СЃРїРёСЃРєР°
+	// выделение памяти под корень списка
 	lst = (struct list*)malloc(sizeof(struct list));
-	//РїСЂРёСЃРІРѕРµРЅРёРµ РґР°РЅРЅС‹С…
+	//присвоение данных
 	lst->_db = a;
-	lst->next = NULL; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СѓР·РµР»
-	lst->prev = NULL; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СѓР·РµР»
+	lst->next = NULL; // указатель на следующий узел
+	lst->prev = NULL; // указатель на предыдущий узел
 	return(lst);
 }
 
+void AddInListTypePC()
+{
+	lenghtTypesPC++;
+	typesPC = (struct  TypePC*)realloc(typesPC, lenghtTypesPC * sizeof(struct  TypePC));
+	printf("Вводите название типа ПК = ");
+	scanf("%s", typesPC[lenghtTypesPC - 1].nameType);
+}
+
+void PrintListTypePC()
+{
+	for (int i = 0; i < lenghtTypesPC; i++)
+	{
+		printf("\n Номер элемента списка типов ПК %d содержимое %s", i, typesPC[i].nameType);
+	}
+}
 char ClearTrashSymbol(char c)
 {
 	int isTrash = 0;
@@ -80,7 +95,7 @@ void ClearTrash(char* str, int lenght)
 struct db dbEnterData()
 {
 	struct db _db;
-	//РІРІРѕРґ IP
+	//ввод IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
 	int a = 0, isString = 0, isNull1, isNull2;
 	do
@@ -93,7 +108,7 @@ struct db dbEnterData()
 		fseek(stdin, 0, SEEK_END);
 		for (int i = 0; i < 3; i++)
 		{
-			
+
 			if (str[i] == '\0')
 			{
 				i = 3;
@@ -115,10 +130,10 @@ struct db dbEnterData()
 			}
 			else
 			{
-				a += (((str[0] - '0') * 100) +((str[1] - '0') * 10) + (str[2] - '0'));
+				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
 			}
 		}
-		
+
 		_db._ip.oneCell = a;
 	} while (a < 0 || a > 255 || !isString == 0);
 
@@ -263,35 +278,74 @@ struct db dbEnterData()
 	ClearTrash(_db.groupe_user, 5);
 
 
-
-	int type;
-	do
+	if (lenghtTypesPC == 0)
 	{
-		printf("\nEnter Type PC \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
-		scanf("%d", &type);
-	} while (!(type == 1 || type == 2 || type == 0));
-	switch (type)
+		printf("\nВвод первого типа ПК\n");
+		AddInListTypePC();
+		_db.typePC = typesPC[0];
+	}
+	else
 	{
-	case 0:
-		_db.typePC = 0;
-		break;
-	case 1:
-		_db.typePC = 1;
-		break;
-	case 2:
-		_db.typePC = 2;
-		break;
+		char choice = '0';
+		do
+		{
+			printf("\nХотите ли Вы добавить новый тип ПК? Если да то введите Y(y), иначе N(n) = ");
+			scanf("%c", &choice);
+		} while (choice == 'y' || choice == 'Y' || choice == 'n' || choice == 'N');
+		if (choice == 'y' || choice == 'Y')
+		{
+			AddInListTypePC();
+			do
+			{
+				printf("\nХотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип? Если да то введите Y(y), иначе N(n) = ");
+				scanf("%c", &choice);
+			} while (choice == 'y' || choice == 'Y' || choice == 'n' || choice == 'N');
+			if (choice == 'y' || choice == 'Y')
+			{
+				_db.typePC = typesPC[lenghtTypesPC-1];
+			}
+			else
+			{
+				int choIce = -1;
+				printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
+				for (int i = 0; i < lenghtTypesPC; i++)
+				{
+					printf("\n%d) %s", i, typesPC[i]);
+				}
+				do
+				{
+					printf("Введите порядковый номер от 0 до %d", lenghtTypesPC - 1);
+					scanf("%d", &choIce);
+				} while (choIce < 0 || choIce >= lenghtTypesPC);
+				_db.typePC = typesPC[choIce];
+			}
+		}
+		else
+		{
+			int choIce = -1;
+			printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
+			for (int i = 0; i < lenghtTypesPC; i++)
+			{
+				printf("\n%d) %s", i, typesPC[i]);
+			}
+			do
+			{
+				printf("Введите порядковый номер от 0 до %d", lenghtTypesPC - 1);
+				scanf("%d", &choIce);
+			} while (choIce < 0 || choIce >= lenghtTypesPC);
+			_db.typePC = typesPC[choIce];
+		}
 	}
 	fseek(stdin, 0, SEEK_END);
 	return _db;
 }
 
 
-//РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РјРµР¶РґСѓ СЌР»РµРјРµРЅС‚Р°РјРё
+//добавление элемента между элементами
 void addelem(struct list *head) {
-	
-	struct list *temp, *p, *cur =NULL;
-	int i = 0,a = -1;
+
+	struct list *temp, *p, *cur = NULL;
+	int i = 0, a = -1;
 	fseek(stdin, 0, SEEK_END);
 	if (head->next != NULL)
 	{
@@ -315,11 +369,11 @@ void addelem(struct list *head) {
 			{
 				struct db newItem = dbEnterData();
 				temp = (struct list*)malloc(sizeof(struct list));
-				p = cur->next; // СЃРѕС…СЂР°РЅРµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СѓР·РµР»
-				cur->next = temp; // РїСЂРµРґС‹РґСѓС‰РёР№ СѓР·РµР» СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕР·РґР°РІР°РµРјС‹Р№
-				temp->_db = newItem; // СЃРѕС…СЂР°РЅРµРЅРёРµ РїРѕР»СЏ РґР°РЅРЅС‹С… РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СѓР·Р»Р°
-				temp->next = p; // СЃРѕР·РґР°РЅРЅС‹Р№ СѓР·РµР» СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СѓР·РµР»
-				temp->prev = cur; // СЃРѕР·РґР°РЅРЅС‹Р№ СѓР·РµР» СѓРєР°Р·С‹РІР°РµС‚ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СѓР·РµР»
+				p = cur->next; // сохранение указателя на следующий узел
+				cur->next = temp; // предыдущий узел указывает на создаваемый
+				temp->_db = newItem; // сохранение поля данных добавляемого узла
+				temp->next = p; // созданный узел указывает на следующий узел
+				temp->prev = cur; // созданный узел указывает на предыдущий узел
 				if (p != NULL)
 					p->prev = temp;
 			}
@@ -338,7 +392,7 @@ void addelem(struct list *head) {
 	}
 }
 
-//РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РјРµР¶РґСѓ СЌР»РµРјРµРЅС‚Р°РјРё
+//добавление элемента между элементами
 void addElemToEnd(struct list *head) {
 
 	struct list *temp, *cur;
@@ -353,9 +407,9 @@ void addElemToEnd(struct list *head) {
 
 	struct db newItem = dbEnterData();
 	temp = (struct list*)malloc(sizeof(struct list));
-	cur->next = temp; // РїСЂРµРґС‹РґСѓС‰РёР№ СѓР·РµР» СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕР·РґР°РІР°РµРјС‹Р№
-	temp->_db = newItem; // СЃРѕС…СЂР°РЅРµРЅРёРµ РїРѕР»СЏ РґР°РЅРЅС‹С… РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СѓР·Р»Р°
-	temp->prev = cur; // СЃРѕР·РґР°РЅРЅС‹Р№ СѓР·РµР» СѓРєР°Р·С‹РІР°РµС‚ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СѓР·РµР»
+	cur->next = temp; // предыдущий узел указывает на создаваемый
+	temp->_db = newItem; // сохранение поля данных добавляемого узла
+	temp->prev = cur; // созданный узел указывает на предыдущий узел
 	temp->next = NULL;
 }
 
@@ -376,13 +430,13 @@ void deletelem(struct list *lst) {
 		}
 		if (i == a)
 		{
-			prev = cur->prev; // СѓР·РµР», РїСЂРµРґС€РµСЃС‚РІСѓСЋС‰РёР№ lst
-			next = cur->next; // СѓР·РµР», СЃР»РµРґСѓСЋС‰РёР№ Р·Р° lst
+			prev = cur->prev; // узел, предшествующий lst
+			next = cur->next; // узел, следующий за lst
 			if (prev != NULL)
-				prev->next = cur->next; // РїРµСЂРµСЃС‚Р°РІР»СЏРµРј СѓРєР°Р·Р°С‚РµР»СЊ
+				prev->next = cur->next; // переставляем указатель
 			if (next != NULL)
-				next->prev = cur->prev; // РїРµСЂРµСЃС‚Р°РІР»СЏРµРј СѓРєР°Р·Р°С‚РµР»СЊ
-			free(cur); // РѕСЃРІРѕР±РѕР¶РґР°РµРј РїР°РјСЏС‚СЊ СѓРґР°Р»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+				next->prev = cur->prev; // переставляем указатель
+			free(cur); // освобождаем память удаляемого элемента
 		}
 		else
 		{
@@ -431,15 +485,15 @@ struct list * deleteHead(struct list *root) {
 
 void dbPrint(struct db _db)
 {
-	//РІС‹РІРѕРґ IP
+	//вывод IP
 	printf("IP = %d.%d.%d.%d \n", _db._ip.oneCell, _db._ip.twoCell, _db._ip.threeCell, _db._ip.fourCell);
-	//РІС‹РІРѕРґ РёРјРµРЅРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	//вывод имени пользователя
 	printf("Name User = ");
 	for (int i = 0; i < 10; i++)
 	{
 		printf("%c", _db.name_user[i]);
 	}
-	//РІС‹РІРѕРґ С„Р°РјРёР»РёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	//вывод фамилии пользователя
 	printf("\nSurName User = ");
 	for (int i = 0; i < 10; i++)
 	{
@@ -458,28 +512,20 @@ void dbPrint(struct db _db)
 		printf("%c", _db.groupe_user[i]);
 	}
 
-	printf("\nType PC = ");
-	switch (_db.typePC)
-	{
-	case 0: printf("one\n");
-		break;
-	case 1:printf("two\n");
-		break;
-	case 2:printf("three\n");
-		break;
-	}
+	printf("\nType PC = %s", _db.typePC.nameType);
+	
 }
 
 void EditElement(struct list *head)
 {
 	struct list *cur = head;
-	int lenght,i = 0;
+	int lenght, i = 0;
 	do
 	{
 		printf("Enter index editing element = ");
 		scanf("%d", &lenght);
 	} while (lenght < 0);
-	while (i < lenght & cur->next!=NULL)
+	while (i < lenght & cur->next != NULL)
 	{
 		cur = cur->next;
 		i++;
@@ -703,13 +749,13 @@ void EditElement(struct list *head)
 			ClearTrash(cur->_db.name_pc, 10);
 			break;
 		case 6:
-			
+
 			do
 			{
 				printf("\nEnter Type PC \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
 				scanf("%d", &type);
 			} while (!(type == 1 || type == 2 || type == 0));
-			switch (type)
+			/*switch (type)
 			{
 			case 0:
 				cur->_db.typePC = 0;
@@ -720,7 +766,7 @@ void EditElement(struct list *head)
 			case 2:
 				cur->_db.typePC = 2;
 				break;
-			}
+			}*/
 			fseek(stdin, 0, SEEK_END);
 			break;
 		}
@@ -733,14 +779,71 @@ void EditElement(struct list *head)
 void listPrint(struct list *lst) {
 	struct list *p;
 	p = lst;
-	while(p != NULL)
+	while (p != NULL)
 	{
-		dbPrint(p->_db); // РІС‹РІРѕРґ Р·РЅР°С‡РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° p
+		dbPrint(p->_db); // вывод значения элемента p
 		if (p->next != NULL)
-			p = p->next; // РїРµСЂРµС…РѕРґ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СѓР·Р»Сѓ
+			p = p->next; // переход к следующему узлу
 		else
 			return;
 	}
+}
+
+struct list * swap(struct list *lst1, struct list *lst2, struct list *head)
+{
+	// Возвращает новый корень списка
+	struct list *prev1, *prev2, *next1, *next2;
+	prev1 = lst1->prev;  // узел предшествующий lst1
+	prev2 = lst2->prev;  // узел предшествующий lst2
+	next1 = lst1->next; // узел следующий за lst1
+	next2 = lst2->next; // узел следующий за lst2
+	if (lst2 == next1)  // обмениваются соседние узлы
+	{
+		lst2->next = lst1;
+		lst2->prev = prev1;
+		lst1->next = next2;
+		lst1->prev = lst2;
+		if (next2 != NULL)
+			next2->prev = lst1;
+		if (lst1 != head)
+			prev1->next = lst2;
+	}
+	else if (lst1 == next2)  // обмениваются соседние узлы
+	{
+		lst1->next = lst2;
+		lst1->prev = prev2;
+		lst2->next = next1;
+		lst2->prev = lst1;
+		if (next1 != NULL)
+			next1->prev = lst2;
+		if (lst2 != head)
+			prev2->next = lst1;
+	}
+	else  // обмениваются отстоящие узлы
+	{
+		if (lst1 != head)  // указатель prev можно установить только для элемента,
+			prev1->next = lst2; // не являющегося корневым
+		lst2->next = next1;
+		if (lst2 != head)
+			prev2->next = lst1;
+		lst1->next = next2;
+		lst2->prev = prev1;
+		if (next2 != NULL) // указатель next можно установить только для элемента,
+			next2->prev = lst1; // не являющегося последним
+		lst1->prev = prev2;
+		if (next1 != NULL)
+			next1->prev = lst2;
+	}
+	if (lst1 == head)
+		return(lst2);
+	if (lst2 == head)
+		return(lst1);
+	return(head);
+}
+
+void SortByName(struct list *head)
+{
+	int index = 0;
 }
 
 void Menu(struct list *head)
@@ -814,7 +917,13 @@ void Menu(struct list *head)
 }
 int main()
 {
-	struct list *head = NULL/* "РіРѕР»РѕРІР°" Р»РёСЃС‚Р°*/;
+	system("chcp 1251");
+	struct list *head = NULL/* "голова" листа*/;
+	//AddInListTypePC(); 
+	//AddInListTypePC(); 
+	//AddInListTypePC();
+
+	//PrintListTypePC();
 	Menu(head);
 	return 0;
 }
