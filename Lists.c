@@ -835,7 +835,18 @@ void listPrint(struct list *lst) {
 			return;
 	}
 }
+struct list * SwapTwo(struct list *head)
+{
+	struct list *first, *second;
 
+	second = head;
+	first = head->next;
+	first->prev = NULL;
+	first->next = second;
+	second->prev = first;
+	second->next = NULL;
+	return first;
+}
 struct list * swap(struct list *lst1, struct list *lst2, struct list *head)
 {
 	// Возвращает новый корень списка
@@ -888,17 +899,33 @@ struct list * swap(struct list *lst1, struct list *lst2, struct list *head)
 	return(head);
 }
 
-void SortByName(struct list *head)
+struct list * SortByName(struct list *head)
 {
 	struct list *p = head;
 	int index = 0;
-	while (index - 1 < lenghtLists)
+	if (lenghtLists == 1)
+	{
+		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
+		return head;
+	}
+	else if (lenghtLists == 2)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
-			head = swap(p, p->next, head);
+			return head = SwapTwo(head);
 		}
-		p = p->next;
+	}
+	else
+	{
+		while (index - 1 < lenghtLists)
+		{
+			if (p->_db.name_user[0] > p->next->_db.name_user[0])
+			{
+				head = swap(p, p->next, head);
+			}
+			p = p->next;
+		}
+		return head;
 	}
 }
 
@@ -965,7 +992,7 @@ void Menu(struct list *head)
 				listPrint(head);
 				break;
 			case 8:
-				SortByName(head);
+				head = SortByName(head);
 				break;
 			case 9:
 				return;
