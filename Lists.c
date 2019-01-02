@@ -352,14 +352,14 @@ struct db dbEnterData()
 			else
 			{
 				int choIce = -1;
-				printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
+				printf("\nВыберите тип ПК из списка и введите порядковый номер типа далее:");
 				for (int i = 0; i < lenghtTypesPC; i++)
 				{
 					printf("\n%d) %s", i, typesPC[i]);
 				}
 				do
 				{
-					printf("Введите порядковый номер от 0 до %d", lenghtTypesPC - 1);
+					printf("\nВведите порядковый номер от 0 до %d = ", lenghtTypesPC - 1);
 					scanf("%d", &choIce);
 				} while (choIce < 0 || choIce >= lenghtTypesPC);
 				_db.typePC = typesPC[choIce];
@@ -371,11 +371,11 @@ struct db dbEnterData()
 			printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
 			for (int i = 0; i < lenghtTypesPC; i++)
 			{
-				printf("\n%d) %s", i, typesPC[i].nameType);
+				printf("\n%d) %s\n", i, typesPC[i].nameType);
 			}
 			do
 			{
-				printf("Введите порядковый номер от 0 до %d", lenghtTypesPC - 1);
+				printf("Введите порядковый номер от 0 до %d = ", lenghtTypesPC - 1);
 				scanf("%d", &choIce);
 			} while (choIce < 0 || choIce >= lenghtTypesPC);
 			_db.typePC = typesPC[choIce];
@@ -864,6 +864,7 @@ struct list * SortByName(struct list *head)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
+			printf("Сортировка выполнена!");
 			return head = Swap(p, p->next, head);
 		}
 	}
@@ -889,6 +890,7 @@ struct list * SortByName(struct list *head)
 				index++;
 			}
 		} while (numSwap > 0);
+		printf("Сортировка выполнена!");
 		return head;
 	}
 }
@@ -906,6 +908,7 @@ struct list * SortByTypePC(struct list *head)
 	{
 		if (p->_db.typePC.typeNum > p->next->_db.typePC.typeNum)
 		{
+			printf("Сортировка выполнена!");
 			return head = Swap(p, p->next, head);
 		}
 	}
@@ -931,6 +934,7 @@ struct list * SortByTypePC(struct list *head)
 				index++;
 			}
 		} while (numSwap > 0);
+		printf("Сортировка выполнена!");
 		return head;
 	}
 }
@@ -948,6 +952,7 @@ struct list * SortBySurname(struct list *head)
 	{
 		if (p->_db.surname_user[0] > p->next->_db.surname_user[0])
 		{
+			printf("Сортировка выполнена!");
 			return head = Swap(p, p->next, head);
 		}
 	}
@@ -973,6 +978,7 @@ struct list * SortBySurname(struct list *head)
 				index++;
 			}
 		} while (numSwap > 0);
+		printf("Сортировка выполнена!");
 		return head;
 	}
 }
@@ -990,6 +996,7 @@ struct list * SortByNamePc(struct list *head)
 	{
 		if (p->_db.name_pc[0] > p->next->_db.name_pc[0])
 		{
+			printf("Сортировка выполнена!");
 			return head = Swap(p, p->next, head);
 		}
 	}
@@ -1015,6 +1022,7 @@ struct list * SortByNamePc(struct list *head)
 				index++;
 			}
 		} while (numSwap > 0);
+		printf("Сортировка выполнена!");
 		return head;
 	}
 }
@@ -1032,6 +1040,7 @@ struct list * SortByGroupeUser(struct list *head)
 	{
 		if (p->_db.groupe_user[0] > p->next->_db.groupe_user[0])
 		{
+			printf("Сортировка выполнена!");
 			return head = Swap(p, p->next, head);
 		}
 	}
@@ -1057,6 +1066,7 @@ struct list * SortByGroupeUser(struct list *head)
 				index++;
 			}
 		} while (numSwap > 0);
+		printf("Сортировка выполнена!");
 		return head;
 	}
 }
