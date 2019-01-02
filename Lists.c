@@ -864,7 +864,7 @@ struct list * SortByName(struct list *head)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
-			return head = SwapHead(head);
+			return head = Swap(p, p->next, head);
 		}
 	}
 	else
@@ -906,7 +906,7 @@ struct list * SortByTypePC(struct list *head)
 	{
 		if (p->_db.typePC.typeNum > p->next->_db.typePC.typeNum)
 		{
-			return head = SwapHead(head);
+			return head = Swap(p, p->next, head);
 		}
 	}
 	else
@@ -934,6 +934,133 @@ struct list * SortByTypePC(struct list *head)
 		return head;
 	}
 }
+
+struct list * SortBySurname(struct list *head)
+{
+	struct list *p = head;
+	int index = 0;
+	if (lenghtLists == 1)
+	{
+		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
+		return head;
+	}
+	else if (lenghtLists == 2)
+	{
+		if (p->_db.surname_user[0] > p->next->_db.surname_user[0])
+		{
+			return head = Swap(p, p->next, head);
+		}
+	}
+	else
+	{
+		int numSwap = 0;
+		do
+		{
+			numSwap = 0;
+			index = 0;
+			p = head;
+			while (index < lenghtLists - 1)
+			{
+				if (index <= lenghtLists - 2)
+				{
+					if (p->_db.surname_user[0] > p->next->_db.surname_user[0])
+					{
+						head = Swap(p, p->next, head);
+						numSwap++;
+					}
+				}
+				p = p->next;
+				index++;
+			}
+		} while (numSwap > 0);
+		return head;
+	}
+}
+
+struct list * SortByNamePc(struct list *head)
+{
+	struct list *p = head;
+	int index = 0;
+	if (lenghtLists == 1)
+	{
+		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
+		return head;
+	}
+	else if (lenghtLists == 2)
+	{
+		if (p->_db.name_pc[0] > p->next->_db.name_pc[0])
+		{
+			return head = Swap(p, p->next, head);
+		}
+	}
+	else
+	{
+		int numSwap = 0;
+		do
+		{
+			numSwap = 0;
+			index = 0;
+			p = head;
+			while (index < lenghtLists - 1)
+			{
+				if (index <= lenghtLists - 2)
+				{
+					if (p->_db.name_pc[0] > p->next->_db.name_pc[0])
+					{
+						head = Swap(p, p->next, head);
+						numSwap++;
+					}
+				}
+				p = p->next;
+				index++;
+			}
+		} while (numSwap > 0);
+		return head;
+	}
+}
+
+struct list * SortByGroupeUser(struct list *head)
+{
+	struct list *p = head;
+	int index = 0;
+	if (lenghtLists == 1)
+	{
+		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
+		return head;
+	}
+	else if (lenghtLists == 2)
+	{
+		if (p->_db.groupe_user[0] > p->next->_db.groupe_user[0])
+		{
+			return head = Swap(p, p->next, head);
+		}
+	}
+	else
+	{
+		int numSwap = 0;
+		do
+		{
+			numSwap = 0;
+			index = 0;
+			p = head;
+			while (index < lenghtLists - 1)
+			{
+				if (index <= lenghtLists - 2)
+				{
+					if (p->_db.groupe_user[0] > p->next->_db.groupe_user[0])
+					{
+						head = Swap(p, p->next, head);
+						numSwap++;
+					}
+				}
+				p = p->next;
+				index++;
+			}
+		} while (numSwap > 0);
+		return head;
+	}
+}
+
 
 void Menu(struct list *head)
 {
@@ -971,7 +1098,11 @@ void Menu(struct list *head)
 			printf("6)Delete head element\n");
 			printf("7)Print list's\n");
 			printf("8)Сортировка по имени\n");
-			printf("9)Exit\nEnter = ");
+			printf("9)Сортировка по фамилии\n");
+			printf("10)Сортировка по группе пользователя\n");
+			printf("11)Сортировка по типу ПК\n");
+			printf("12)Сортировка по имени ПК\n");
+			printf("13)Exit\nEnter = ");
 			int choice;
 			scanf("%d", &choice);
 			switch (choice)
@@ -1001,6 +1132,18 @@ void Menu(struct list *head)
 				head = SortByName(head);
 				break;
 			case 9:
+				head = SortBySurname(head);
+				break;
+			case 10:
+				head = SortByGroupeUser(head);
+				break;
+			case 11:
+				head = SortByTypePC(head);
+				break;
+			case 12:
+				head = SortByNamePc(head);
+				break;
+			case 13:
 				return;
 				break;
 			}
