@@ -835,68 +835,36 @@ void listPrint(struct list *lst) {
 			return;
 	}
 }
-struct list * SwapTwo(struct list *head)
+struct list * SwapHead(struct list *head)
 {
-	struct list *first, *second;
 
-	second = head;
-	first = head->next;
-	first->prev = NULL;
-	first->next = second;
-	second->prev = first;
-	second->next = NULL;
-	return first;
+	struct db buf;
+	buf = head->_db;
+	head->_db = head->next->_db;
+	head->next->_db = buf;
+	return head;
 }
-struct list * swap(struct list *lst1, struct list *lst2, struct list *head)
+
+struct list * SwapEnd(struct list *first, struct list *second, struct list *head)
 {
-	// ¬озвращает новый корень списка
-	struct list *prev1, *prev2, *next1, *next2;
-	prev1 = lst1->prev;  // узел предшествующий lst1
-	prev2 = lst2->prev;  // узел предшествующий lst2
-	next1 = lst1->next; // узел следующий за lst1
-	next2 = lst2->next; // узел следующий за lst2
-	if (lst2 == next1)  // обмениваютс€ соседние узлы
-	{
-		lst2->next = lst1;
-		lst2->prev = prev1;
-		lst1->next = next2;
-		lst1->prev = lst2;
-		if (next2 != NULL)
-			next2->prev = lst1;
-		if (lst1 != head)
-			prev1->next = lst2;
-	}
-	else if (lst1 == next2)  // обмениваютс€ соседние узлы
-	{
-		lst1->next = lst2;
-		lst1->prev = prev2;
-		lst2->next = next1;
-		lst2->prev = lst1;
-		if (next1 != NULL)
-			next1->prev = lst2;
-		if (lst2 != head)
-			prev2->next = lst1;
-	}
-	else  // обмениваютс€ отсто€щие узлы
-	{
-		if (lst1 != head)  // указатель prev можно установить только дл€ элемента,
-			prev1->next = lst2; // не €вл€ющегос€ корневым
-		lst2->next = next1;
-		if (lst2 != head)
-			prev2->next = lst1;
-		lst1->next = next2;
-		lst2->prev = prev1;
-		if (next2 != NULL) // указатель next можно установить только дл€ элемента,
-			next2->prev = lst1; // не €вл€ющегос€ последним
-		lst1->prev = prev2;
-		if (next1 != NULL)
-			next1->prev = lst2;
-	}
-	if (lst1 == head)
-		return(lst2);
-	if (lst2 == head)
-		return(lst1);
-	return(head);
+	
+	struct db buf;
+	buf = first->_db;
+	first->_db = second->_db;
+	second->_db = buf;
+	
+	return head;
+}
+
+struct list * Swap(struct list *first, struct list *second, struct list *head)
+{
+
+	struct db buf;
+	buf = first->_db;
+	first->_db = second->_db;
+	second->_db = buf;
+
+	return head;
 }
 
 struct list * SortByName(struct list *head)
@@ -912,19 +880,48 @@ struct list * SortByName(struct list *head)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
-			return head = SwapTwo(head);
+			return head = SwapHead(head);
 		}
 	}
 	else
 	{
-		while (index - 1 < lenghtLists)
+		int numSwap = 0;
+		do
 		{
-			if (p->_db.name_user[0] > p->next->_db.name_user[0])
+			numSwap = 0;
+			index = 0;
+			p = head;
+			while (index < lenghtLists-1)
 			{
-				head = swap(p, p->next, head);
+
+				if (index == 0)
+				{
+					if (p->_db.name_user[0] > p->next->_db.name_user[0])
+					{
+						head = SwapHead(head);
+						numSwap++;
+					}
+				}
+				else if (index == lenghtLists - 2)
+				{
+					if (p->_db.name_user[0] > p->next->_db.name_user[0])
+					{
+						head = SwapEnd(p, p->next, head);
+						numSwap++;
+					}
+				}
+				else 
+				{
+					if (p->_db.name_user[0] > p->next->_db.name_user[0])
+					{
+						head = Swap(p, p->next, head);
+						numSwap++;
+					}
+				}
+				p = p->next;
+				index++;
 			}
-			p = p->next;
-		}
+		} while (numSwap > 0);
 		return head;
 	}
 }
