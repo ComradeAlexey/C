@@ -15,6 +15,7 @@ struct ip
 struct TypePC
 {
 	char nameType[10];
+	int typeNum;
 };
 
 struct db
@@ -49,9 +50,12 @@ struct list * init(struct db a)  // а - значение первого узла
 
 void AddInListTypePC()
 {
-	lenghtTypesPC++;
+	
 	typesPC = (struct  TypePC*)realloc(typesPC, lenghtTypesPC * sizeof(struct  TypePC));
+
 	printf("Вводите название типа ПК = ");
+	typesPC[lenghtTypesPC].typeNum = lenghtTypesPC;
+	lenghtTypesPC++;
 	scanf("%s", typesPC[lenghtTypesPC - 1].nameType);
 }
 
@@ -835,26 +839,6 @@ void listPrint(struct list *lst) {
 			return;
 	}
 }
-struct list * SwapHead(struct list *head)
-{
-
-	struct db buf;
-	buf = head->_db;
-	head->_db = head->next->_db;
-	head->next->_db = buf;
-	return head;
-}
-
-struct list * SwapEnd(struct list *first, struct list *second, struct list *head)
-{
-	
-	struct db buf;
-	buf = first->_db;
-	first->_db = second->_db;
-	second->_db = buf;
-	
-	return head;
-}
 
 struct list * Swap(struct list *first, struct list *second, struct list *head)
 {
@@ -891,28 +875,53 @@ struct list * SortByName(struct list *head)
 			numSwap = 0;
 			index = 0;
 			p = head;
-			while (index < lenghtLists-1)
+			while (index < lenghtLists - 1)
 			{
+				if (index <= lenghtLists - 2)
+				{
+					if (p->_db.name_user[0] > p->next->_db.name_user[0])
+					{
+						head = Swap(p, p->next, head);
+						numSwap++;
+					}
+				}
+				p = p->next;
+				index++;
+			}
+		} while (numSwap > 0);
+		return head;
+	}
+}
 
-				if (index == 0)
+struct list * SortByTypePC(struct list *head)
+{
+	struct list *p = head;
+	int index = 0;
+	if (lenghtLists == 1)
+	{
+		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
+		return head;
+	}
+	else if (lenghtLists == 2)
+	{
+		if (p->_db.typePC.typeNum > p->next->_db.typePC.typeNum)
+		{
+			return head = SwapHead(head);
+		}
+	}
+	else
+	{
+		int numSwap = 0;
+		do
+		{
+			numSwap = 0;
+			index = 0;
+			p = head;
+			while (index < lenghtLists - 1)
+			{
+				if (index <= lenghtLists - 2)
 				{
-					if (p->_db.name_user[0] > p->next->_db.name_user[0])
-					{
-						head = SwapHead(head);
-						numSwap++;
-					}
-				}
-				else if (index == lenghtLists - 2)
-				{
-					if (p->_db.name_user[0] > p->next->_db.name_user[0])
-					{
-						head = SwapEnd(p, p->next, head);
-						numSwap++;
-					}
-				}
-				else 
-				{
-					if (p->_db.name_user[0] > p->next->_db.name_user[0])
+					if (p->_db.typePC.typeNum > p->next->_db.typePC.typeNum)
 					{
 						head = Swap(p, p->next, head);
 						numSwap++;
@@ -1003,11 +1012,6 @@ int main()
 {
 	system("chcp 1251");
 	struct list *head = NULL/* "голова" листа*/;
-	//AddInListTypePC(); 
-	//AddInListTypePC(); 
-	//AddInListTypePC();
-
-	//PrintListTypePC();
 	Menu(head);
 	return 0;
 }
