@@ -17,6 +17,11 @@ struct editIP
 	int a;
 	int isString;
 };
+struct addIP
+{
+	int a;
+	int isString;
+};
 struct TypePC
 {
 	char nameType[10];
@@ -85,6 +90,18 @@ char ClearTrashSymbol(char c)
 		if (c == i)
 			isTrash++;
 	}
+
+	for (char i = 'а'; i <= 'я'; i++)
+	{
+		if (c == i)
+			isTrash++;
+	}
+	for (char i = 'А'; i <= 'Я'; i++)
+	{
+		if (c == i)
+			isTrash++;
+	}
+
 	for (char i = '0'; i <= '9'; i++)
 	{
 		if (c == i)
@@ -102,168 +119,86 @@ void ClearTrash(char* str, int lenght)
 		str[i] = ClearTrashSymbol(str[i]);
 	}
 }
+struct addIP AddPartIP(int numPart)
+{
+	struct addIP add;
+	int a = 0, isString = 0;
+	a = 0;
+	isString = 0;
+	char str[4];
+	printf("Введите %d часть IP = ", numPart);
+	scanf("%3s", &str);
+	fseek(stdin, 0, SEEK_END);
+	for (int i = 0; i < 3; i++)
+	{
 
+		if (str[i] == '\0')
+		{
+			i = 3;
+		}
+		else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+		{
+			isString = 1;
+		}
+	}
+	if (isString == 0)
+	{
+		if (str[1] == '\0')
+		{
+			a += str[0] - '0';
+		}
+		else if (str[2] == '\0')
+		{
+			a += ((str[0] - '0') * 10) + (str[1] - '0');
+		}
+		else
+		{
+			a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+		}
+	}
+	add.a = a;
+	add.isString = isString;
+	return add;
+}
+
+struct db AddIP(struct db _db, int numPart)
+{
+	struct addIP add;
+	do
+	{
+		add = AddPartIP(numPart);
+	} while (add.a < 0 || add.a > 255 || !add.isString == 0);
+	switch (numPart)
+	{
+	case 1:
+		_db._ip.oneCell = add.a;
+		break;
+	case 2:
+		_db._ip.twoCell = add.a;
+		break;
+	case 3:
+		_db._ip.threeCell = add.a;
+		break;
+	case 4:
+		_db._ip.fourCell = add.a;
+		break;
+	}
+	
+	return _db;
+}
 struct db dbEnterData()
 {
 	struct db _db;
+	struct addIP add;
 	//ввод IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
 	int a = 0, isString = 0, isNull1, isNull2;
-	do
-	{
-		a = 0;
-		isString = 0;
-		char str[3];
-		printf("Enter 1 part IP = ");
-		scanf("%3s", &str);
-		fseek(stdin, 0, SEEK_END);
-		for (int i = 0; i < 3; i++)
-		{
 
-			if (str[i] == '\0')
-			{
-				i = 3;
-			}
-			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-			{
-				isString = 1;
-			}
-		}
-		if (isString == 0)
-		{
-			if (str[1] == '\0')
-			{
-				a += str[0] - '0';
-			}
-			else if (str[2] == '\0')
-			{
-				a += ((str[0] - '0') * 10) + (str[1] - '0');
-			}
-			else
-			{
-				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-			}
-		}
+	_db = AddIP(_db, 1);
+	_db = AddIP(_db, 2);
+	_db = AddIP(_db, 3);
+	_db = AddIP(_db, 4);
 
-		_db._ip.oneCell = a;
-	} while (a < 0 || a > 255 || !isString == 0);
-
-	do
-	{
-		a = 0;
-		isString = 0;
-		char str[3];
-		printf("Enter 2 part IP = ");
-		scanf("%3s", &str);
-		fseek(stdin, 0, SEEK_END);
-		for (int i = 0; i < 3; i++)
-		{
-
-			if (str[i] == '\0')
-			{
-				i = 3;
-			}
-			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-			{
-				isString = 1;
-			}
-		}
-		if (isString == 0)
-		{
-			if (str[1] == '\0')
-			{
-				a += str[0] - '0';
-			}
-			else if (str[2] == '\0')
-			{
-				a += ((str[0] - '0') * 10) + (str[1] - '0');
-			}
-			else
-			{
-				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-			}
-		}
-
-		_db._ip.twoCell = a;
-	} while (a < 0 || a > 255 || !isString == 0);
-	do
-	{
-		a = 0;
-		isString = 0;
-		char str[3];
-		printf("Enter 3 part IP = ");
-		scanf("%3s", &str);
-		fseek(stdin, 0, SEEK_END);
-		for (int i = 0; i < 3; i++)
-		{
-
-			if (str[i] == '\0')
-			{
-				i = 3;
-			}
-			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-			{
-				isString = 1;
-			}
-		}
-		if (isString == 0)
-		{
-			if (str[1] == '\0')
-			{
-				a += str[0] - '0';
-			}
-			else if (str[2] == '\0')
-			{
-				a += ((str[0] - '0') * 10) + (str[1] - '0');
-			}
-			else
-			{
-				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-			}
-		}
-
-		_db._ip.threeCell = a;
-	} while (a < 0 || a > 255 || !isString == 0);
-
-	do
-	{
-		a = 0;
-		isString = 0;
-		char str[3];
-		printf("Enter 4 part IP = ");
-		scanf("%3s", &str);
-		fseek(stdin, 0, SEEK_END);
-		for (int i = 0; i < 3; i++)
-		{
-
-			if (str[i] == '\0')
-			{
-				i = 3;
-			}
-			else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-			{
-				isString = 1;
-			}
-		}
-		if (isString == 0)
-		{
-			if (str[1] == '\0')
-			{
-				a += str[0] - '0';
-			}
-			else if (str[2] == '\0')
-			{
-				a += ((str[0] - '0') * 10) + (str[1] - '0');
-			}
-			else
-			{
-				a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-			}
-		}
-
-		_db._ip.fourCell = a;
-	} while (a < 0 || a > 255 || !isString == 0);
-	fseek(stdin, 0, SEEK_END);
 
 	printf("Enter Name User p.s. only a,b,c... and 1,2,3 other symbols delete! = ");
 	scanf("%10s", &_db.name_user);
@@ -329,7 +264,7 @@ struct db dbEnterData()
 			do
 			{
 				printf("\nХотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип? Если да то введите Y(y), иначе N(n) = ");
-				scanf("%c", &choice); 
+				scanf("%c", &choice);
 				fseek(stdin, 0, SEEK_END);
 				switch (choice)
 				{
@@ -352,7 +287,7 @@ struct db dbEnterData()
 			} while (b == 0);
 			if (choice == 'y' || choice == 'Y')
 			{
-				_db.typePC = typesPC[lenghtTypesPC-1];
+				_db.typePC = typesPC[lenghtTypesPC - 1];
 			}
 			else
 			{
