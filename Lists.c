@@ -12,6 +12,11 @@ struct ip
 	unsigned char fourCell;//четвёртая ячейка адресса
 };
 
+struct editIP
+{
+	int a;
+	int isString;
+};
 struct TypePC
 {
 	char nameType[10];
@@ -566,14 +571,54 @@ void dbPrint(struct db _db)
 	printf("\nType PC = %s", _db.typePC.nameType);
 	
 }
+struct editIP EditIP(int numPart)
+{
+	struct editIP edit;
+	int a = 0, isString = 0;
+	a = 0;
+	isString = 0;
+	char str[3];
+	printf("Введите %d часть IP = ", numPart);
+	scanf("%3s", &str);
+	fseek(stdin, 0, SEEK_END);
+	for (int i = 0; i < 3; i++)
+	{
 
+		if (str[i] == '\0')
+		{
+			i = 3;
+		}
+		else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+		{
+			isString = 1;
+		}
+	}
+	if (isString == 0)
+	{
+		if (str[1] == '\0')
+		{
+			a += str[0] - '0';
+		}
+		else if (str[2] == '\0')
+		{
+			a += ((str[0] - '0') * 10) + (str[1] - '0');
+		}
+		else
+		{
+			a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
+		}
+	}
+	edit.a = a;
+	edit.isString = isString;
+	return edit;
+}
 void EditElement(struct list *head)
 {
 	struct list *cur = head;
 	int lenght, i = 0;
 	do
 	{
-		printf("Enter index editing element = ");
+		printf("Введите индекс редактируемого элемента(отчёт начинается с 0) = ");
 		scanf("%d", &lenght);
 	} while (lenght < 0);
 	while (i < lenght & cur->next != NULL)
@@ -583,247 +628,100 @@ void EditElement(struct list *head)
 	}
 	if (i == lenght)
 	{
-		printf("Select the item you want to edit \n");
+		printf("выберите пункт который хотите редактировать\n");
 		printf("1)IP\n");
-		printf("2)Name user\n");
-		printf("3)Surname user\n");
-		printf("4)Groupe user\n");
-		printf("5)Name PC\n");
-		printf("6)Type PC\n");
-		printf("Enter you choice = ");
+		printf("2)Имя пользователя\n");
+		printf("3)Фамилию пользователя\n");
+		printf("4)Группу пользователя\n");
+		printf("5)Имя ПК\n");
+		printf("6)Тип ПК\n");
+		printf("Введите число = ");
 		int choice;
 		int type;
-		int a = 0, isString = 0;
+		
 		scanf("%d", &choice);
 		switch (choice)
 		{
 		case 1:
-			printf("Select the part IP you want to edit : 1,2,3,4\n");
+			printf("Выберите часть IP которую хотите редактировать : 1,2,3,4\n");
 			int choiceIP;
 			do
 			{
 				scanf("%d", &choiceIP);
 			} while (choiceIP < 1 || choiceIP >4);
-			printf("Enter of IP\n p.s. interval from 0 to 255\n");
-			int a;
+			printf("Введите IP\n p.s. интервал значения от 0 до 255\n");
+			struct editIP edit;
 			switch (choiceIP)
 			{
 			case 1:
 				do
 				{
-					a = 0;
-					isString = 0;
-					char str[3];
-					printf("Enter 1 part IP = ");
-					scanf("%3s", &str);
-					fseek(stdin, 0, SEEK_END);
-					for (int i = 0; i < 3; i++)
-					{
-
-						if (str[i] == '\0')
-						{
-							i = 3;
-						}
-						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-						{
-							isString = 1;
-						}
-					}
-					if (isString == 0)
-					{
-						if (str[1] == '\0')
-						{
-							a += str[0] - '0';
-						}
-						else if (str[2] == '\0')
-						{
-							a += ((str[0] - '0') * 10) + (str[1] - '0');
-						}
-						else
-						{
-							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-						}
-					}
-
-					cur->_db._ip.oneCell = a;
-				} while (a < 0 || a > 255 || !isString == 0);
+					edit = EditIP(1);
+				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
+				cur->_db._ip.oneCell = edit.a;
 				break;
 			case 2:
 				do
 				{
-					a = 0;
-					isString = 0;
-					char str[3];
-					printf("Enter 2 part IP = ");
-					scanf("%3s", &str);
-					fseek(stdin, 0, SEEK_END);
-					for (int i = 0; i < 3; i++)
-					{
-
-						if (str[i] == '\0')
-						{
-							i = 3;
-						}
-						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-						{
-							isString = 1;
-						}
-					}
-					if (isString == 0)
-					{
-						if (str[1] == '\0')
-						{
-							a += str[0] - '0';
-						}
-						else if (str[2] == '\0')
-						{
-							a += ((str[0] - '0') * 10) + (str[1] - '0');
-						}
-						else
-						{
-							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-						}
-					}
-
-					cur->_db._ip.twoCell = a;
-				} while (a < 0 || a > 255 || !isString == 0);
+					edit = EditIP(2);
+				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
+				cur->_db._ip.twoCell = edit.a;
 				break;
 			case 3:
 				do
 				{
-					a = 0;
-					isString = 0;
-					char str[3];
-					printf("Enter 3 part IP = ");
-					scanf("%3s", &str);
-					fseek(stdin, 0, SEEK_END);
-					for (int i = 0; i < 3; i++)
-					{
-
-						if (str[i] == '\0')
-						{
-							i = 3;
-						}
-						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-						{
-							isString = 1;
-						}
-					}
-					if (isString == 0)
-					{
-						if (str[1] == '\0')
-						{
-							a += str[0] - '0';
-						}
-						else if (str[2] == '\0')
-						{
-							a += ((str[0] - '0') * 10) + (str[1] - '0');
-						}
-						else
-						{
-							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-						}
-					}
-
-					cur->_db._ip.threeCell = a;
-				} while (a < 0 || a > 255 || !isString == 0);
+					edit = EditIP(3);
+				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
+				cur->_db._ip.threeCell = edit.a;
 				break;
 			case 4:
 				do
 				{
-					a = 0;
-					isString = 0;
-					char str[3];
-					printf("Enter 4 part IP = ");
-					scanf("%3s", &str);
-					fseek(stdin, 0, SEEK_END);
-					for (int i = 0; i < 3; i++)
-					{
-
-						if (str[i] == '\0')
-						{
-							i = 3;
-						}
-						else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
-						{
-							isString = 1;
-						}
-					}
-					if (isString == 0)
-					{
-						if (str[1] == '\0')
-						{
-							a += str[0] - '0';
-						}
-						else if (str[2] == '\0')
-						{
-							a += ((str[0] - '0') * 10) + (str[1] - '0');
-						}
-						else
-						{
-							a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-						}
-					}
-
-					cur->_db._ip.fourCell = a;
-				} while (a < 0 || a > 255 || !isString == 0);
-				fseek(stdin, 0, SEEK_END);
+					edit = EditIP(4);
+				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
+				cur->_db._ip.fourCell = edit.a;
 				break;
-
-
 			}
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 2:
-			printf("Enter Name User p.s. only a,b,c... and 1,2,3 other symbols delete! = ");
+			printf("Введите имя пользователя p.s. только a,b,c... и 1,2,3, остальные символы удаляются! = ");
 			scanf("%10s", &cur->_db.name_user);
 			ClearTrash(cur->_db.name_user, 10);
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 3:
-			printf("\nEnter SurName User p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
+			printf("\nВведите фамилию пользователя p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
 			scanf("%10s", &cur->_db.surname_user);
 			ClearTrash(cur->_db.surname_user, 10);
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 4:
-			printf("\nEnter Groupe user p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
+			printf("\nВведите группу пользователя пользователя p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
 
 			scanf("%5s", &cur->_db.groupe_user);
 			fseek(stdin, 0, SEEK_END);
 			ClearTrash(cur->_db.groupe_user, 5);
 			break;
 		case 5:
-			printf("\nEnter Name PC p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
+			printf("\nВведите имя ПК p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
 			scanf("%10s", &cur->_db.name_pc);
 			fseek(stdin, 0, SEEK_END);
 			ClearTrash(cur->_db.name_pc, 10);
 			break;
-		case 6:
+		/*case 6:
 
 			do
 			{
-				printf("\nEnter Type PC \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
+				printf("\nВведите имя пользователя \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
 				scanf("%d", &type);
 			} while (!(type == 1 || type == 2 || type == 0));
-			/*switch (type)
-			{
-			case 0:
-				cur->_db.typePC = 0;
-				break;
-			case 1:
-				cur->_db.typePC = 1;
-				break;
-			case 2:
-				cur->_db.typePC = 2;
-				break;
-			}*/
 			fseek(stdin, 0, SEEK_END);
-			break;
+			break;*/
 		}
 	}
 	else {
-		printf("This is element not exist!!!\n");
+		printf("Данного элемента нету в списке!!!\n");
 	}
 }
 
@@ -1076,12 +974,12 @@ void Menu(struct list *head)
 {
 	while (1)
 	{
+		system("cls");
 		if (head == NULL)
 		{
-			system("cls");
-			printf("Enter the number that indicates your choice.\n");
-			printf("1)Add element\n");
-			printf("2)Exit \nEnter = ");
+			printf("Введите нужный Вам пункт\n");
+			printf("1)Добавить корневой элемент\n");
+			printf("2)Выйти\nВведите число = ");
 			int choice;
 			scanf("%d", &choice);
 			struct db _db;
@@ -1098,21 +996,20 @@ void Menu(struct list *head)
 		}
 		else
 		{
-			system("cls");
-			printf("Enter the number that indicates your choice.\n");
-			printf("1)Add element between  element's \n");
-			printf("2)Add element to end list\n");
-			printf("3)Edit element\n");
-			printf("4)Delete element between element's\n");
-			printf("5)Delete end element\n");
-			printf("6)Delete head element\n");
-			printf("7)Print list's\n");
+			printf("Введите нужный Вам пункт\n");
+			printf("1)Добавить элемент между элементами\n");
+			printf("2)Добавить элемент в конец списка\n");
+			printf("3)Редактировать элемент\n");
+			printf("4)Удалить элемент между элементами\n");
+			printf("5)Удалить последний в списке элемент\n");
+			printf("6)Удалить корневой элемент\n");
+			printf("7)Вывести все элементы\n");
 			printf("8)Сортировка по имени\n");
 			printf("9)Сортировка по фамилии\n");
 			printf("10)Сортировка по группе пользователя\n");
 			printf("11)Сортировка по типу ПК\n");
 			printf("12)Сортировка по имени ПК\n");
-			printf("13)Exit\nEnter = ");
+			printf("13)Выйти\nВведите число = ");
 			int choice;
 			scanf("%d", &choice);
 			switch (choice)
