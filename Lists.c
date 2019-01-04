@@ -173,6 +173,17 @@ int AddIP(int numPart)
 	
 	return ip;
 }
+
+char *AddString(char *name ,int lenghtString)
+{
+	char *str;
+	str = (char *)malloc(sizeof(char) * lenghtString);
+	printf("Enter %s p.s. only a,b,c... and 1,2,3 other symbols delete! = ", name);
+	scanf("%10s", &str);
+	ClearTrash(str, lenghtString);
+	fseek(stdin, 0, SEEK_END);
+	return str;
+}
 struct db dbEnterData()
 {
 	struct db _db;
@@ -186,30 +197,10 @@ struct db dbEnterData()
 	_db._ip.threeCell = AddIP(3);
 	_db._ip.fourCell = AddIP(4);
 
-
-	printf("Enter Name User p.s. only a,b,c... and 1,2,3 other symbols delete! = ");
-	scanf("%10s", &_db.name_user);
-	ClearTrash(_db.name_user, 10);
-	fseek(stdin, 0, SEEK_END);
-
-
-	printf("\nEnter SurName User p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
-	scanf("%10s", &_db.surname_user);
-	ClearTrash(_db.surname_user, 10);
-	fseek(stdin, 0, SEEK_END);
-
-	printf("\nEnter Name PC p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
-	scanf("%10s", &_db.name_pc);
-	fseek(stdin, 0, SEEK_END);
-	ClearTrash(_db.name_pc, 10);
-
-
-	printf("\nEnter Groupe user p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
-
-	scanf("%5s", &_db.groupe_user);
-	fseek(stdin, 0, SEEK_END);
-	ClearTrash(_db.groupe_user, 5);
-
+	*_db.name_user = AddString("Name User", 10);
+	*_db.surname_user = AddString("SurName User", 10);
+	*_db.name_pc = AddString("Name PC", 10);
+	*_db.groupe_user = AddString("Groupe user", 5);
 
 	if (lenghtTypesPC == 0)
 	{
