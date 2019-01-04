@@ -161,30 +161,17 @@ struct addIP AddPartIP(int numPart)
 	return add;
 }
 
-struct db AddIP(struct db _db, int numPart)
+int AddIP(int numPart)
 {
+	int ip;
 	struct addIP add;
 	do
 	{
 		add = AddPartIP(numPart);
 	} while (add.a < 0 || add.a > 255 || !add.isString == 0);
-	switch (numPart)
-	{
-	case 1:
-		_db._ip.oneCell = add.a;
-		break;
-	case 2:
-		_db._ip.twoCell = add.a;
-		break;
-	case 3:
-		_db._ip.threeCell = add.a;
-		break;
-	case 4:
-		_db._ip.fourCell = add.a;
-		break;
-	}
+	ip = add.a;
 	
-	return _db;
+	return ip;
 }
 struct db dbEnterData()
 {
@@ -194,10 +181,10 @@ struct db dbEnterData()
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
 	int a = 0, isString = 0, isNull1, isNull2;
 
-	_db = AddIP(_db, 1);
-	_db = AddIP(_db, 2);
-	_db = AddIP(_db, 3);
-	_db = AddIP(_db, 4);
+	_db._ip.oneCell = AddIP(1);
+	_db._ip.twoCell = AddIP(2);
+	_db._ip.threeCell = AddIP(3);
+	_db._ip.fourCell = AddIP(4);
 
 
 	printf("Enter Name User p.s. only a,b,c... and 1,2,3 other symbols delete! = ");
