@@ -6,10 +6,10 @@ int lenghtTypesPC = 0;
 int lenghtLists = 0;
 struct ip
 {
-	unsigned char oneCell;//первая ячейка адресса
-	unsigned char twoCell;//вторая ячейка адресса
-	unsigned char threeCell;//третья ячейка адресса
-	unsigned char fourCell;//четвёртая ячейка адресса
+	unsigned char oneCell;//ГЇГҐГ°ГўГ Гї ГїГ·ГҐГ©ГЄГ  Г Г¤Г°ГҐГ±Г±Г 
+	unsigned char twoCell;//ГўГІГ®Г°Г Гї ГїГ·ГҐГ©ГЄГ  Г Г¤Г°ГҐГ±Г±Г 
+	unsigned char threeCell;//ГІГ°ГҐГІГјГї ГїГ·ГҐГ©ГЄГ  Г Г¤Г°ГҐГ±Г±Г 
+	unsigned char fourCell;//Г·ГҐГІГўВёГ°ГІГ Гї ГїГ·ГҐГ©ГЄГ  Г Г¤Г°ГҐГ±Г±Г 
 };
 
 struct editIP
@@ -30,30 +30,30 @@ struct TypePC
 
 struct db
 {
-	struct ip _ip;//структура ip адресса, состоит из четырёх переменных, каждая из которых отвечает за свою ячейку адресса
-	char name_pc[10];//название ПК
-	char name_user[10];//Имя пользователя
-	char surname_user[10];//Фамилия пользователя
-	char groupe_user[5];//Название группы
-	struct TypePC typePC;//Тип ПК
+	struct ip _ip;//Г±ГІГ°ГіГЄГІГіГ°Г  ip Г Г¤Г°ГҐГ±Г±Г , Г±Г®Г±ГІГ®ГЁГІ ГЁГ§ Г·ГҐГІГ»Г°ВёГµ ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»Гµ, ГЄГ Г¦Г¤Г Гї ГЁГ§ ГЄГ®ГІГ®Г°Г»Гµ Г®ГІГўГҐГ·Г ГҐГІ Г§Г  Г±ГўГ®Гѕ ГїГ·ГҐГ©ГЄГі Г Г¤Г°ГҐГ±Г±Г 
+	char name_pc[10];//Г­Г Г§ГўГ Г­ГЁГҐ ГЏГЉ
+	char name_user[10];//Г€Г¬Гї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
+	char surname_user[10];//Г”Г Г¬ГЁГ«ГЁГї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
+	char groupe_user[5];//ГЌГ Г§ГўГ Г­ГЁГҐ ГЈГ°ГіГЇГЇГ»
+	struct TypePC typePC;//Г’ГЁГЇ ГЏГЉ
 };
 
 struct list
 {
-	struct db _db; // поле данных
-	struct list *next; // указатель на следующий элемент
-	struct list *prev; // указатель на предыдущий элемент
+	struct db _db; // ГЇГ®Г«ГҐ Г¤Г Г­Г­Г»Гµ
+	struct list *next; // ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ
+	struct list *prev; // ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ
 };
 
-struct list * init(struct db a)  // а - значение первого узла
+struct list * init(struct db a)  // Г  - Г§Г­Г Г·ГҐГ­ГЁГҐ ГЇГҐГ°ГўГ®ГЈГ® ГіГ§Г«Г 
 {
 	struct list *lst;
-	// выделение памяти под корень списка
+	// ГўГ»Г¤ГҐГ«ГҐГ­ГЁГҐ ГЇГ Г¬ГїГІГЁ ГЇГ®Г¤ ГЄГ®Г°ГҐГ­Гј Г±ГЇГЁГ±ГЄГ 
 	lst = (struct list*)malloc(sizeof(struct list));
-	//присвоение данных
+	//ГЇГ°ГЁГ±ГўГ®ГҐГ­ГЁГҐ Г¤Г Г­Г­Г»Гµ
 	lst->_db = a;
-	lst->next = NULL; // указатель на следующий узел
-	lst->prev = NULL; // указатель на предыдущий узел
+	lst->next = NULL; // ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ§ГҐГ«
+	lst->prev = NULL; // ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© ГіГ§ГҐГ«
 	lenghtLists++;
 	return(lst);
 }
@@ -63,7 +63,7 @@ void AddInListTypePC()
 	
 	typesPC = (struct  TypePC*)realloc(typesPC, lenghtTypesPC * sizeof(struct  TypePC));
 
-	printf("Вводите название типа ПК = ");
+	printf("Г‚ГўГ®Г¤ГЁГІГҐ Г­Г Г§ГўГ Г­ГЁГҐ ГІГЁГЇГ  ГЏГЉ = ");
 	typesPC[lenghtTypesPC].typeNum = lenghtTypesPC;
 	lenghtTypesPC++;
 	scanf("%s", typesPC[lenghtTypesPC - 1].nameType);
@@ -73,7 +73,7 @@ void PrintListTypePC()
 {
 	for (int i = 0; i < lenghtTypesPC; i++)
 	{
-		printf("\n Номер элемента списка типов ПК %d содержимое %s", i, typesPC[i].nameType);
+		printf("\n ГЌГ®Г¬ГҐГ° ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г±ГЇГЁГ±ГЄГ  ГІГЁГЇГ®Гў ГЏГЉ %d Г±Г®Г¤ГҐГ°Г¦ГЁГ¬Г®ГҐ %s", i, typesPC[i].nameType);
 	}
 }
 char ClearTrashSymbol(char c)
@@ -91,12 +91,12 @@ char ClearTrashSymbol(char c)
 			isTrash++;
 	}
 
-	for (char i = 'а'; i <= 'я'; i++)
+	for (char i = 'Г '; i <= 'Гї'; i++)
 	{
 		if (c == i)
 			isTrash++;
 	}
-	for (char i = 'А'; i <= 'Я'; i++)
+	for (char i = 'ГЂ'; i <= 'Гџ'; i++)
 	{
 		if (c == i)
 			isTrash++;
@@ -126,7 +126,7 @@ struct addIP AddPartIP(int numPart)
 	a = 0;
 	isString = 0;
 	char str[4];
-	printf("Введите %d часть IP = ", numPart);
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ %d Г·Г Г±ГІГј IP = ", numPart);
 	scanf("%3s", &str);
 	fseek(stdin, 0, SEEK_END);
 	for (int i = 0; i < 3; i++)
@@ -188,7 +188,7 @@ struct db dbEnterData()
 {
 	struct db _db;
 	struct addIP add;
-	//ввод IP
+	//ГўГўГ®Г¤ IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
 	int a = 0, isString = 0, isNull1, isNull2;
 
@@ -204,7 +204,7 @@ struct db dbEnterData()
 
 	if (lenghtTypesPC == 0)
 	{
-		printf("\nВвод первого типа ПК\n");
+		printf("\nГ‚ГўГ®Г¤ ГЇГҐГ°ГўГ®ГЈГ® ГІГЁГЇГ  ГЏГЉ\n");
 		AddInListTypePC();
 		_db.typePC = typesPC[0];
 	}
@@ -214,7 +214,7 @@ struct db dbEnterData()
 		int b = 0;
 		do
 		{
-			printf("\nХотите ли Вы добавить новый тип ПК? Если да то введите Y(y), иначе N(n) = ");
+			printf("\nГ•Г®ГІГЁГІГҐ Г«ГЁ Г‚Г» Г¤Г®ГЎГ ГўГЁГІГј Г­Г®ГўГ»Г© ГІГЁГЇ ГЏГЉ? Г…Г±Г«ГЁ Г¤Г  ГІГ® ГўГўГҐГ¤ГЁГІГҐ Y(y), ГЁГ­Г Г·ГҐ N(n) = ");
 			scanf("%c", &choice);
 			fseek(stdin, 0, SEEK_END);
 			switch (choice)
@@ -241,7 +241,7 @@ struct db dbEnterData()
 			AddInListTypePC();
 			do
 			{
-				printf("\nХотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип? Если да то введите Y(y), иначе N(n) = ");
+				printf("\nГ•Г®ГІГЁГІГҐ Г«ГЁ Г‚Г» Г¤Г®ГЎГ ГўГЁГІГј Г­Г®ГўГ»Г© ГІГЁГЇ ГЏГЉ Гў ГЄГ Г·ГҐГ±ГІГўГҐ ГІГЁГЇГ  Г¤Г Г­Г­Г®ГЈГ® ГЏГЉ ГЁГ«ГЁ ГўГ»ГЎГ°Г ГІГј Г¤Г°ГіГЈГ®Г© ГІГЁГЇ? Г…Г±Г«ГЁ Г¤Г  ГІГ® ГўГўГҐГ¤ГЁГІГҐ Y(y), ГЁГ­Г Г·ГҐ N(n) = ");
 				scanf("%c", &choice);
 				fseek(stdin, 0, SEEK_END);
 				switch (choice)
@@ -270,14 +270,14 @@ struct db dbEnterData()
 			else
 			{
 				int choIce = -1;
-				printf("\nВыберите тип ПК из списка и введите порядковый номер типа далее:");
+				printf("\nГ‚Г»ГЎГҐГ°ГЁГІГҐ ГІГЁГЇ ГЏГЉ ГЁГ§ Г±ГЇГЁГ±ГЄГ  ГЁ ГўГўГҐГ¤ГЁГІГҐ ГЇГ®Г°ГїГ¤ГЄГ®ГўГ»Г© Г­Г®Г¬ГҐГ° ГІГЁГЇГ  Г¤Г Г«ГҐГҐ:");
 				for (int i = 0; i < lenghtTypesPC; i++)
 				{
 					printf("\n%d) %s", i, typesPC[i]);
 				}
 				do
 				{
-					printf("\nВведите порядковый номер от 0 до %d = ", lenghtTypesPC - 1);
+					printf("\nГ‚ГўГҐГ¤ГЁГІГҐ ГЇГ®Г°ГїГ¤ГЄГ®ГўГ»Г© Г­Г®Г¬ГҐГ° Г®ГІ 0 Г¤Г® %d = ", lenghtTypesPC - 1);
 					scanf("%d", &choIce);
 				} while (choIce < 0 || choIce >= lenghtTypesPC);
 				_db.typePC = typesPC[choIce];
@@ -286,14 +286,14 @@ struct db dbEnterData()
 		else
 		{
 			int choIce = -1;
-			printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
+			printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ ГІГЁГЇ ГЏГЉ ГЁГ§ Г±ГЇГЁГ±ГЄГ  ГЁ ГўГўГҐГ¤ГЁГІГҐ ГЇГ®Г°ГїГ¤ГЄГ®ГўГ»Г© Г­Г®Г¬ГҐГ° ГІГЁГЇГ  Г¤Г Г«ГҐГҐ:");
 			for (int i = 0; i < lenghtTypesPC; i++)
 			{
 				printf("\n%d) %s\n", i, typesPC[i].nameType);
 			}
 			do
 			{
-				printf("Введите порядковый номер от 0 до %d = ", lenghtTypesPC - 1);
+				printf("Г‚ГўГҐГ¤ГЁГІГҐ ГЇГ®Г°ГїГ¤ГЄГ®ГўГ»Г© Г­Г®Г¬ГҐГ° Г®ГІ 0 Г¤Г® %d = ", lenghtTypesPC - 1);
 				scanf("%d", &choIce);
 			} while (choIce < 0 || choIce >= lenghtTypesPC);
 			_db.typePC = typesPC[choIce];
@@ -304,7 +304,7 @@ struct db dbEnterData()
 }
 
 
-//добавление элемента между элементами
+//Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г¬ГҐГ¦Г¤Гі ГЅГ«ГҐГ¬ГҐГ­ГІГ Г¬ГЁ
 void addelem(struct list *head) {
 
 	struct list *temp, *p, *cur = NULL;
@@ -332,11 +332,11 @@ void addelem(struct list *head) {
 			{
 				struct db newItem = dbEnterData();
 				temp = (struct list*)malloc(sizeof(struct list));
-				p = cur->next; // сохранение указателя на следующий узел
-				cur->next = temp; // предыдущий узел указывает на создаваемый
-				temp->_db = newItem; // сохранение поля данных добавляемого узла
-				temp->next = p; // созданный узел указывает на следующий узел
-				temp->prev = cur; // созданный узел указывает на предыдущий узел
+				p = cur->next; // Г±Г®ГµГ°Г Г­ГҐГ­ГЁГҐ ГіГЄГ Г§Г ГІГҐГ«Гї Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ§ГҐГ«
+				cur->next = temp; // ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© ГіГ§ГҐГ« ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  Г±Г®Г§Г¤Г ГўГ ГҐГ¬Г»Г©
+				temp->_db = newItem; // Г±Г®ГµГ°Г Г­ГҐГ­ГЁГҐ ГЇГ®Г«Гї Г¤Г Г­Г­Г»Гµ Г¤Г®ГЎГ ГўГ«ГїГҐГ¬Г®ГЈГ® ГіГ§Г«Г 
+				temp->next = p; // Г±Г®Г§Г¤Г Г­Г­Г»Г© ГіГ§ГҐГ« ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ§ГҐГ«
+				temp->prev = cur; // Г±Г®Г§Г¤Г Г­Г­Г»Г© ГіГ§ГҐГ« ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© ГіГ§ГҐГ«
 				if (p != NULL)
 					p->prev = temp;
 				lenghtLists++;
@@ -356,7 +356,7 @@ void addelem(struct list *head) {
 	}
 }
 
-//добавление элемента между элементами
+//Г¤Г®ГЎГ ГўГ«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г¬ГҐГ¦Г¤Гі ГЅГ«ГҐГ¬ГҐГ­ГІГ Г¬ГЁ
 void addElemToEnd(struct list *head) {
 
 	struct list *temp, *cur;
@@ -371,9 +371,9 @@ void addElemToEnd(struct list *head) {
 
 	struct db newItem = dbEnterData();
 	temp = (struct list*)malloc(sizeof(struct list));
-	cur->next = temp; // предыдущий узел указывает на создаваемый
-	temp->_db = newItem; // сохранение поля данных добавляемого узла
-	temp->prev = cur; // созданный узел указывает на предыдущий узел
+	cur->next = temp; // ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© ГіГ§ГҐГ« ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  Г±Г®Г§Г¤Г ГўГ ГҐГ¬Г»Г©
+	temp->_db = newItem; // Г±Г®ГµГ°Г Г­ГҐГ­ГЁГҐ ГЇГ®Г«Гї Г¤Г Г­Г­Г»Гµ Г¤Г®ГЎГ ГўГ«ГїГҐГ¬Г®ГЈГ® ГіГ§Г«Г 
+	temp->prev = cur; // Г±Г®Г§Г¤Г Г­Г­Г»Г© ГіГ§ГҐГ« ГіГЄГ Г§Г»ГўГ ГҐГІ Г­Г  ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГЁГ© ГіГ§ГҐГ«
 	temp->next = NULL;
 	lenghtLists++;
 }
@@ -395,13 +395,13 @@ void deletelem(struct list *lst) {
 		}
 		if (i == a)
 		{
-			prev = cur->prev; // узел, предшествующий lst
-			next = cur->next; // узел, следующий за lst
+			prev = cur->prev; // ГіГ§ГҐГ«, ГЇГ°ГҐГ¤ГёГҐГ±ГІГўГіГѕГ№ГЁГ© lst
+			next = cur->next; // ГіГ§ГҐГ«, Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© Г§Г  lst
 			if (prev != NULL)
-				prev->next = cur->next; // переставляем указатель
+				prev->next = cur->next; // ГЇГҐГ°ГҐГ±ГІГ ГўГ«ГїГҐГ¬ ГіГЄГ Г§Г ГІГҐГ«Гј
 			if (next != NULL)
-				next->prev = cur->prev; // переставляем указатель
-			free(cur); // освобождаем память удаляемого элемента
+				next->prev = cur->prev; // ГЇГҐГ°ГҐГ±ГІГ ГўГ«ГїГҐГ¬ ГіГЄГ Г§Г ГІГҐГ«Гј
+			free(cur); // Г®Г±ГўГ®ГЎГ®Г¦Г¤Г ГҐГ¬ ГЇГ Г¬ГїГІГј ГіГ¤Г Г«ГїГҐГ¬Г®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ 
 			lenghtLists--;
 		}
 		else
@@ -454,15 +454,15 @@ struct list * deleteHead(struct list *root) {
 
 void dbPrint(struct db _db)
 {
-	//вывод IP
+	//ГўГ»ГўГ®Г¤ IP
 	printf("IP = %d.%d.%d.%d \n", _db._ip.oneCell, _db._ip.twoCell, _db._ip.threeCell, _db._ip.fourCell);
-	//вывод имени пользователя
+	//ГўГ»ГўГ®Г¤ ГЁГ¬ГҐГ­ГЁ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
 	printf("Name User = ");
 	for (int i = 0; i < 10; i++)
 	{
 		printf("%c", _db.name_user[i]);
 	}
-	//вывод фамилии пользователя
+	//ГўГ»ГўГ®Г¤ ГґГ Г¬ГЁГ«ГЁГЁ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї
 	printf("\nSurName User = ");
 	for (int i = 0; i < 10; i++)
 	{
@@ -491,7 +491,7 @@ struct editIP EditIP(int numPart)
 	a = 0;
 	isString = 0;
 	char str[3];
-	printf("Введите %d часть IP = ", numPart);
+	printf("Г‚ГўГҐГ¤ГЁГІГҐ %d Г·Г Г±ГІГј IP = ", numPart);
 	scanf("%3s", &str);
 	fseek(stdin, 0, SEEK_END);
 	for (int i = 0; i < 3; i++)
@@ -531,7 +531,7 @@ void EditElement(struct list *head)
 	int lenght, i = 0;
 	do
 	{
-		printf("Введите индекс редактируемого элемента(отчёт начинается с 0) = ");
+		printf("Г‚ГўГҐГ¤ГЁГІГҐ ГЁГ­Г¤ГҐГЄГ± Г°ГҐГ¤Г ГЄГІГЁГ°ГіГҐГ¬Г®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ (Г®ГІГ·ВёГІ Г­Г Г·ГЁГ­Г ГҐГІГ±Гї Г± 0) = ");
 		scanf("%d", &lenght);
 	} while (lenght < 0);
 	while (i < lenght & cur->next != NULL)
@@ -541,14 +541,14 @@ void EditElement(struct list *head)
 	}
 	if (i == lenght)
 	{
-		printf("выберите пункт который хотите редактировать\n");
+		printf("ГўГ»ГЎГҐГ°ГЁГІГҐ ГЇГіГ­ГЄГІ ГЄГ®ГІГ®Г°Г»Г© ГµГ®ГІГЁГІГҐ Г°ГҐГ¤Г ГЄГІГЁГ°Г®ГўГ ГІГј\n");
 		printf("1)IP\n");
-		printf("2)Имя пользователя\n");
-		printf("3)Фамилию пользователя\n");
-		printf("4)Группу пользователя\n");
-		printf("5)Имя ПК\n");
-		printf("6)Тип ПК\n");
-		printf("Введите число = ");
+		printf("2)Г€Г¬Гї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї\n");
+		printf("3)Г”Г Г¬ГЁГ«ГЁГѕ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї\n");
+		printf("4)ГѓГ°ГіГЇГЇГі ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї\n");
+		printf("5)Г€Г¬Гї ГЏГЉ\n");
+		printf("6)Г’ГЁГЇ ГЏГЉ\n");
+		printf("Г‚ГўГҐГ¤ГЁГІГҐ Г·ГЁГ±Г«Г® = ");
 		int choice;
 		int type;
 		
@@ -556,13 +556,13 @@ void EditElement(struct list *head)
 		switch (choice)
 		{
 		case 1:
-			printf("Выберите часть IP которую хотите редактировать : 1,2,3,4\n");
+			printf("Г‚Г»ГЎГҐГ°ГЁГІГҐ Г·Г Г±ГІГј IP ГЄГ®ГІГ®Г°ГіГѕ ГµГ®ГІГЁГІГҐ Г°ГҐГ¤Г ГЄГІГЁГ°Г®ГўГ ГІГј : 1,2,3,4\n");
 			int choiceIP;
 			do
 			{
 				scanf("%d", &choiceIP);
 			} while (choiceIP < 1 || choiceIP >4);
-			printf("Введите IP\n p.s. интервал значения от 0 до 255\n");
+			printf("Г‚ГўГҐГ¤ГЁГІГҐ IP\n p.s. ГЁГ­ГІГҐГ°ГўГ Г« Г§Г­Г Г·ГҐГ­ГЁГї Г®ГІ 0 Г¤Г® 255\n");
 			struct editIP edit;
 			switch (choiceIP)
 			{
@@ -598,26 +598,26 @@ void EditElement(struct list *head)
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 2:
-			printf("Введите имя пользователя p.s. только a,b,c... и 1,2,3, остальные символы удаляются! = ");
+			printf("Г‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї p.s. ГІГ®Г«ГјГЄГ® a,b,c... ГЁ 1,2,3, Г®Г±ГІГ Г«ГјГ­Г»ГҐ Г±ГЁГ¬ГўГ®Г«Г» ГіГ¤Г Г«ГїГѕГІГ±Гї! = ");
 			scanf("%10s", &cur->_db.name_user);
 			ClearTrash(cur->_db.name_user, 10);
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 3:
-			printf("\nВведите фамилию пользователя p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
+			printf("\nГ‚ГўГҐГ¤ГЁГІГҐ ГґГ Г¬ГЁГ«ГЁГѕ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
 			scanf("%10s", &cur->_db.surname_user);
 			ClearTrash(cur->_db.surname_user, 10);
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 4:
-			printf("\nВведите группу пользователя пользователя p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
+			printf("\nГ‚ГўГҐГ¤ГЁГІГҐ ГЈГ°ГіГЇГЇГі ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
 
 			scanf("%5s", &cur->_db.groupe_user);
 			fseek(stdin, 0, SEEK_END);
 			ClearTrash(cur->_db.groupe_user, 5);
 			break;
 		case 5:
-			printf("\nВведите имя ПК p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
+			printf("\nГ‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї ГЏГЉ p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
 			scanf("%10s", &cur->_db.name_pc);
 			fseek(stdin, 0, SEEK_END);
 			ClearTrash(cur->_db.name_pc, 10);
@@ -626,7 +626,7 @@ void EditElement(struct list *head)
 
 			do
 			{
-				printf("\nВведите имя пользователя \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
+				printf("\nГ‚ГўГҐГ¤ГЁГІГҐ ГЁГ¬Гї ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
 				scanf("%d", &type);
 			} while (!(type == 1 || type == 2 || type == 0));
 			fseek(stdin, 0, SEEK_END);
@@ -634,7 +634,7 @@ void EditElement(struct list *head)
 		}
 	}
 	else {
-		printf("Данного элемента нету в списке!!!\n");
+		printf("Г„Г Г­Г­Г®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г­ГҐГІГі Гў Г±ГЇГЁГ±ГЄГҐ!!!\n");
 	}
 }
 
@@ -643,9 +643,9 @@ void listPrint(struct list *lst) {
 	p = lst;
 	while (p != NULL)
 	{
-		dbPrint(p->_db); // вывод значения элемента p
+		dbPrint(p->_db); // ГўГ»ГўГ®Г¤ Г§Г­Г Г·ГҐГ­ГЁГї ГЅГ«ГҐГ¬ГҐГ­ГІГ  p
 		if (p->next != NULL)
-			p = p->next; // переход к следующему узлу
+			p = p->next; // ГЇГҐГ°ГҐГµГ®Г¤ ГЄ Г±Г«ГҐГ¤ГіГѕГ№ГҐГ¬Гі ГіГ§Г«Гі
 		else
 			return;
 	}
@@ -742,14 +742,14 @@ struct list * AscendingSort(struct list *head, int typeSort)
 	int index = 0;
 	if (lenghtLists == 1)
 	{
-		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
+		printf("Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  Г­ГҐ Г¬Г®Г¦ГҐГІ ГЎГ»ГІГј ГўГ»ГЇГ®Г«Г­ГҐГ­Г  ГІ.ГЄ. Гў Г±ГЇГЁГ±ГЄГҐ ГўГ±ГҐГЈГ® Г«ГЁГёГј Г®Г¤ГЁГ­ ГЅГ«ГҐГ¬ГҐГ­ГІ!");
 		return head;
 	}
 	else if (lenghtLists == 2)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
-			printf("Сортировка выполнена!");
+			printf("Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГўГ»ГЇГ®Г«Г­ГҐГ­Г !");
 			return head = Swap(p, p->next, head);
 		}
 	}
@@ -771,7 +771,7 @@ struct list * AscendingSort(struct list *head, int typeSort)
 				index++;
 			}
 		} while (numSwap > 0);
-		printf("Сортировка выполнена!");
+		printf("Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГўГ»ГЇГ®Г«Г­ГҐГ­Г !");
 		return head;
 	}
 }
@@ -785,9 +785,9 @@ void Menu(struct list *head)
 		system("cls");
 		if (head == NULL)
 		{
-			printf("Введите нужный Вам пункт\n");
-			printf("1)Добавить корневой элемент\n");
-			printf("2)Выйти\nВведите число = ");
+			printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­ГіГ¦Г­Г»Г© Г‚Г Г¬ ГЇГіГ­ГЄГІ\n");
+			printf("1)Г„Г®ГЎГ ГўГЁГІГј ГЄГ®Г°Г­ГҐГўГ®Г© ГЅГ«ГҐГ¬ГҐГ­ГІ\n");
+			printf("2)Г‚Г»Г©ГІГЁ\nГ‚ГўГҐГ¤ГЁГІГҐ Г·ГЁГ±Г«Г® = ");
 			int choice;
 			scanf("%d", &choice);
 			struct db _db;
@@ -804,20 +804,20 @@ void Menu(struct list *head)
 		}
 		else
 		{
-			printf("Введите нужный Вам пункт\n");
-			printf("1)Добавить элемент между элементами\n");
-			printf("2)Добавить элемент в конец списка\n");
-			printf("3)Редактировать элемент\n");
-			printf("4)Удалить элемент между элементами\n");
-			printf("5)Удалить последний в списке элемент\n");
-			printf("6)Удалить корневой элемент\n");
-			printf("7)Вывести все элементы\n");
-			printf("8)Сортировка по имени\n");
-			printf("9)Сортировка по фамилии\n");
-			printf("10)Сортировка по группе пользователя\n");
-			printf("11)Сортировка по типу ПК\n");
-			printf("12)Сортировка по имени ПК\n");
-			printf("13)Выйти\nВведите число = ");
+			printf("Г‚ГўГҐГ¤ГЁГІГҐ Г­ГіГ¦Г­Г»Г© Г‚Г Г¬ ГЇГіГ­ГЄГІ\n");
+			printf("1)Г„Г®ГЎГ ГўГЁГІГј ГЅГ«ГҐГ¬ГҐГ­ГІ Г¬ГҐГ¦Г¤Гі ГЅГ«ГҐГ¬ГҐГ­ГІГ Г¬ГЁ\n");
+			printf("2)Г„Г®ГЎГ ГўГЁГІГј ГЅГ«ГҐГ¬ГҐГ­ГІ Гў ГЄГ®Г­ГҐГ¶ Г±ГЇГЁГ±ГЄГ \n");
+			printf("3)ГђГҐГ¤Г ГЄГІГЁГ°Г®ГўГ ГІГј ГЅГ«ГҐГ¬ГҐГ­ГІ\n");
+			printf("4)Г“Г¤Г Г«ГЁГІГј ГЅГ«ГҐГ¬ГҐГ­ГІ Г¬ГҐГ¦Г¤Гі ГЅГ«ГҐГ¬ГҐГ­ГІГ Г¬ГЁ\n");
+			printf("5)Г“Г¤Г Г«ГЁГІГј ГЇГ®Г±Г«ГҐГ¤Г­ГЁГ© Гў Г±ГЇГЁГ±ГЄГҐ ГЅГ«ГҐГ¬ГҐГ­ГІ\n");
+			printf("6)Г“Г¤Г Г«ГЁГІГј ГЄГ®Г°Г­ГҐГўГ®Г© ГЅГ«ГҐГ¬ГҐГ­ГІ\n");
+			printf("7)Г‚Г»ГўГҐГ±ГІГЁ ГўГ±ГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ»\n");
+			printf("8)Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГЇГ® ГЁГ¬ГҐГ­ГЁ\n");
+			printf("9)Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГЇГ® ГґГ Г¬ГЁГ«ГЁГЁ\n");
+			printf("10)Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГЇГ® ГЈГ°ГіГЇГЇГҐ ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї\n");
+			printf("11)Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГЇГ® ГІГЁГЇГі ГЏГЉ\n");
+			printf("12)Г‘Г®Г°ГІГЁГ°Г®ГўГЄГ  ГЇГ® ГЁГ¬ГҐГ­ГЁ ГЏГЉ\n");
+			printf("13)Г‚Г»Г©ГІГЁ\nГ‚ГўГҐГ¤ГЁГІГҐ Г·ГЁГ±Г«Г® = ");
 			int choice;
 			scanf("%d", &choice);
 			switch (choice)
@@ -869,7 +869,7 @@ void Menu(struct list *head)
 int main()
 {
 	system("chcp 1251");
-	struct list *head = NULL/* "голова" листа*/;
+	struct list *head = NULL/* "ГЈГ®Г«Г®ГўГ " Г«ГЁГ±ГІГ */;
 	Menu(head);
 	return 0;
 }
