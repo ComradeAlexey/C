@@ -50,13 +50,13 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 			switch (choice)
 			{
 			case 1:
-				addelem(head, lenghtLists, &lenghtTypesPC, &typesPC);
+				addelem(head, lenghtLists, lenghtTypesPC, typesPC);
 				break;
 			case 2:
 				addElemToEnd(head, lenghtTypesPC, typesPC, lenghtLists);
 				break;
 			case 3:
-				EditElement(head);
+				EditElement(head, lenghtTypesPC, typesPC, lenghtLists);
 				break;
 			case 4:
 				deletelem(head,lenghtLists);

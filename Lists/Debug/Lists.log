@@ -1,39 +1,13 @@
 ﻿  AddList.c
-c:\users\alexei\source\repos\lists\lists\addlist.c(21): warning C4473: "scanf_s": передано недостаточно аргументов для строки формата
-  c:\users\alexei\source\repos\lists\lists\addlist.c(21): note: заполнители и их параметры ожидают переменное число аргументов в количестве 2, но было предоставлено 1
-  c:\users\alexei\source\repos\lists\lists\addlist.c(21): note: отсутствующий вариативный аргумент "2" требуется для строки форматирования "%s"
-  c:\users\alexei\source\repos\lists\lists\addlist.c(21): note: этот аргумент используется в качестве размера буфера
-c:\users\alexei\source\repos\lists\lists\addlist.c(41): warning C4554: "&": проверьте приоритет операторов на ошибки; для уточнения приоритета используйте скобки
-c:\users\alexei\source\repos\lists\lists\addlist.c(32): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1274): note:  см. объявление "scanf"
-c:\users\alexei\source\repos\lists\lists\addlist.c(85): warning C4013: ClearTrash: нет определения; предполагается "extern" с возвратом типа "int"
-c:\users\alexei\source\repos\lists\lists\addlist.c(84): warning C4477: "scanf_s": в строке форматирования "%10s" требуется аргумент типа "char *", но вариативный аргумент "1" имеет тип "char **"
-  c:\users\alexei\source\repos\lists\lists\addlist.c(84): note: этот аргумент используется описателем преобразования
-c:\users\alexei\source\repos\lists\lists\addlist.c(84): warning C4473: "scanf_s": передано недостаточно аргументов для строки формата
-  c:\users\alexei\source\repos\lists\lists\addlist.c(84): note: заполнители и их параметры ожидают переменное число аргументов в количестве 2, но было предоставлено 1
-  c:\users\alexei\source\repos\lists\lists\addlist.c(84): note: отсутствующий вариативный аргумент "2" требуется для строки форматирования "%10s"
-  c:\users\alexei\source\repos\lists\lists\addlist.c(84): note: этот аргумент используется в качестве размера буфера
-c:\users\alexei\source\repos\lists\lists\addlist.c(102): warning C4047: =: "char" отличается по уровням косвенного обращения от "char *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(103): warning C4047: =: "char" отличается по уровням косвенного обращения от "char *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(104): warning C4047: =: "char" отличается по уровням косвенного обращения от "char *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(105): warning C4047: =: "char" отличается по уровням косвенного обращения от "char *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(176): warning C4047: <: "int" отличается по уровням косвенного обращения от "int *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(184): warning C4047: >=: "int" отличается по уровням косвенного обращения от "int *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(192): warning C4047: <: "int" отличается по уровням косвенного обращения от "int *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(200): warning C4047: >=: "int" отличается по уровням косвенного обращения от "int *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(120): warning C4473: "scanf_s": передано недостаточно аргументов для строки формата
-  c:\users\alexei\source\repos\lists\lists\addlist.c(120): note: заполнители и их параметры ожидают переменное число аргументов в количестве 2, но было предоставлено 1
-  c:\users\alexei\source\repos\lists\lists\addlist.c(120): note: отсутствующий вариативный аргумент "2" требуется для строки форматирования "%c"
-  c:\users\alexei\source\repos\lists\lists\addlist.c(120): note: этот аргумент используется в качестве размера буфера
-c:\users\alexei\source\repos\lists\lists\addlist.c(147): warning C4473: "scanf_s": передано недостаточно аргументов для строки формата
-  c:\users\alexei\source\repos\lists\lists\addlist.c(147): note: заполнители и их параметры ожидают переменное число аргументов в количестве 2, но было предоставлено 1
-  c:\users\alexei\source\repos\lists\lists\addlist.c(147): note: отсутствующий вариативный аргумент "2" требуется для строки форматирования "%c"
-  c:\users\alexei\source\repos\lists\lists\addlist.c(147): note: этот аргумент используется в качестве размера буфера
-c:\users\alexei\source\repos\lists\lists\addlist.c(178): warning C4477: "printf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "2" имеет тип "TypePC"
-c:\users\alexei\source\repos\lists\lists\addlist.c(182): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "1" имеет тип "int *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(198): warning C4477: "printf": в строке форматирования "%d" требуется аргумент типа "int", но вариативный аргумент "1" имеет тип "int *"
-c:\users\alexei\source\repos\lists\lists\addlist.c(95): warning C4101: isNull1: неиспользованная локальная переменная
-c:\users\alexei\source\repos\lists\lists\addlist.c(95): warning C4101: isNull2: неиспользованная локальная переменная
-c:\users\alexei\source\repos\lists\lists\addlist.c(92): warning C4101: add: неиспользованная локальная переменная
-c:\users\alexei\source\repos\lists\lists\addlist.c(225): warning C4554: "&": проверьте приоритет операторов на ошибки; для уточнения приоритета используйте скобки
+c:\users\alexei\source\repos\lists\lists\addlist.c(94): warning C4013: ClearTrash: нет определения; предполагается "extern" с возвратом типа "int"
+c:\users\alexei\source\repos\lists\lists\addlist.c(105): warning C4473: "scanf_s": передано недостаточно аргументов для строки формата
+  c:\users\alexei\source\repos\lists\lists\addlist.c(105): note: заполнители и их параметры ожидают переменное число аргументов в количестве 2, но было предоставлено 1
+  c:\users\alexei\source\repos\lists\lists\addlist.c(105): note: отсутствующий вариативный аргумент "2" требуется для строки форматирования "%c"
+  c:\users\alexei\source\repos\lists\lists\addlist.c(105): note: этот аргумент используется в качестве размера буфера
+c:\users\alexei\source\repos\lists\lists\addlist.c(133): warning C4477: "printf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "2" имеет тип "TypePC"
+c:\users\alexei\source\repos\lists\lists\addlist.c(150): warning C4101: isNull1: неиспользованная локальная переменная
+c:\users\alexei\source\repos\lists\lists\addlist.c(150): warning C4101: isNull2: неиспользованная локальная переменная
+c:\users\alexei\source\repos\lists\lists\addlist.c(146): warning C4101: add: неиспользованная локальная переменная
+  Menu.c
+  Создание кода...
   Lists.vcxproj -> C:\Users\Alexei\source\repos\Lists\Debug\Lists.exe

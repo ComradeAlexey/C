@@ -1,5 +1,9 @@
 #include"TypesData.h"
-struct list * init(struct db a, int *lenghtLists)  // а - значение первого узла
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
+struct list * init(struct db a,int *lenghtLists)  // а - значение первого узла
 {
 	struct list *lst;
 	// выделение памяти под корень списка
@@ -8,17 +12,22 @@ struct list * init(struct db a, int *lenghtLists)  // а - значение первого узла
 	lst->_db = a;
 	lst->next = NULL; // указатель на следующий узел
 	lst->prev = NULL; // указатель на предыдущий узел
-	*lenghtLists++;
+	int b = *lenghtLists;
+	b++;
+	*lenghtLists = b;;
 	return(lst);
-}
+} 
 
-void AddInListTypePC(int *lenghtTypesPC, struct  TypePC *typesPC)
+struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC)
 {
-	typesPC = (struct  TypePC*)realloc(typesPC, *lenghtTypesPC * sizeof(struct  TypePC));
+	int i = *lenghtTypesPC;
+	i++;
+	typesPC = (struct  TypePC*)realloc(typesPC, i * sizeof(struct TypePC));
 	printf("Вводите название типа ПК = ");
-	typesPC[*lenghtTypesPC].typeNum = *lenghtTypesPC;
-	*lenghtTypesPC++;
-	scanf_s("%s", typesPC[*lenghtTypesPC - 1].nameType);
+	typesPC[i-1].typeNum = i;
+	scanf_s("%s", typesPC[i - 1].nameType, 10);
+	*lenghtTypesPC = i;
+	return typesPC;
 }
 
 struct addIP AddPartIP(int numPart)
@@ -29,7 +38,7 @@ struct addIP AddPartIP(int numPart)
 	isString = 0;
 	char str[4];
 	printf("Введите %d часть IP = ", numPart);
-	scanf("%4s", &str);
+	scanf_s("%s", &str,4);
 	fseek(stdin, 0, SEEK_END);
 	for (int i = 0; i < 3; i++)
 	{
@@ -38,7 +47,7 @@ struct addIP AddPartIP(int numPart)
 		{
 			i = 3;
 		}
-		else if (str[i] > '9' || str[i] < '0' & str[i] != '\0')
+		else if ((str[i] > '9' || str[i] < '0') & (str[i] != '\0'))
 		{
 			isString = 1;
 		}
@@ -76,20 +85,66 @@ int AddIP(int numPart)
 	return ip;
 }
 
-char AddString(char *name, int lenghtString)
+char* AddString(char *name, int lenghtString)
 {
 	char *str;
-	str = (char *)malloc(sizeof(char) * lenghtString);
+	str = (char *)malloc(lenghtString * sizeof(char));
 	printf("Enter %s p.s. only a,b,c... and 1,2,3 other symbols delete! = ", name);
-	scanf_s("%10s", &str);
+	scanf_s("%s", str, lenghtString);
 	ClearTrash(str, lenghtString);
 	fseek(stdin, 0, SEEK_END);
 	return str;
+}
+
+void ChoiceYN(char *str, char *choice)
+{
+	int b;
+	do
+	{
+		printf("\n%s? Если да то введите Y(y), иначе N(n) = ",str);
+		scanf_s("%c", choice);
+		fseek(stdin, 0, SEEK_END);
+		switch (*choice)
+		{
+		case 'N':
+			b = 1;
+			break;
+		case 'n':
+			b = 1;
+			break;
+		case 'y':
+			b = 1;
+			break;
+		case 'Y':
+			b = 1;
+			break;
+		default:
+			b = 0;
+			break;
+		}
+	} while (b == 0);
+}
+struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db)
+{
+	int choIce = -1;
+	printf("\nВыберите тип ПК из списка и введите порядковый номер типа далее:");
+	for (int i = 0; i < lenghtTPC; i++)
+	{
+		printf("\n%d) %s", i, typesPC[i]);
+	}
+	do
+	{
+		printf("\nВведите порядковый номер от 0 до %d = ", lenghtTPC - 1);
+		scanf_s("%d", &choIce);
+	} while (choIce < 0 || choIce >= lenghtTPC);
+	_db.typePC = typesPC[choIce];
+	return _db;
 }
 struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 {
 	struct db _db;
 	struct addIP add;
+	int lenghtTPC = *lenghtTypesPC;//данные указателя lenghtTypesPC
 	//ввод IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
 	int a = 0, isString = 0, isNull1, isNull2;
@@ -99,116 +154,49 @@ struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 	_db._ip.threeCell = AddIP(3);
 	_db._ip.fourCell = AddIP(4);
 
-	*_db.name_user = AddString("Name User", 10);
-	*_db.surname_user = AddString("SurName User", 10);
-	*_db.name_pc = AddString("Name PC", 10);
-	*_db.groupe_user = AddString("Groupe user", 5);
+	_db.name_user = AddString("Name User", 10);
+	_db.surname_user = AddString("SurName User", 10);
+	_db.name_pc = AddString("Name PC", 10);
+	_db.groupe_user = AddString("Groupe user", 5);
 
-	if (*lenghtTypesPC == 0)
+	if (lenghtTPC == 0)
 	{
 		printf("\nВвод первого типа ПК\n");
-		AddInListTypePC(lenghtTypesPC, typesPC);
+		typesPC = AddInListTypePC(lenghtTypesPC, typesPC);
+		lenghtTPC = *lenghtTypesPC;
 		_db.typePC = typesPC[0];
 	}
 	else
 	{
 		char choice = '0';
 		int b = 0;
-		do
-		{
-			printf("\nХотите ли Вы добавить новый тип ПК? Если да то введите Y(y), иначе N(n) = ");
-			scanf_s("%c", &choice);
-			fseek(stdin, 0, SEEK_END);
-			switch (choice)
-			{
-			case 'N':
-				b = 1;
-				break;
-			case 'n':
-				b = 1;
-				break;
-			case 'y':
-				b = 1;
-				break;
-			case 'Y':
-				b = 1;
-				break;
-			default:
-				b = 0;
-				break;
-			}
-		} while (b == 0);
+		ChoiceYN("Хотите ли Вы добавить новый тип ПК",&choice);
 		if (choice == 'y' || choice == 'Y')
 		{
 			AddInListTypePC(lenghtTypesPC, typesPC);
-			do
-			{
-				printf("\nХотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип? Если да то введите Y(y), иначе N(n) = ");
-				scanf_s("%c", &choice);
-				fseek(stdin, 0, SEEK_END);
-				switch (choice)
-				{
-				case 'N':
-					b = 1;
-					break;
-				case 'n':
-					b = 1;
-					break;
-				case 'y':
-					b = 1;
-					break;
-				case 'Y':
-					b = 1;
-					break;
-				default:
-					b = 0;
-					break;
-				}
-			} while (b == 0);
+			lenghtTPC = *lenghtTypesPC;
+			ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип", &choice);
 			if (choice == 'y' || choice == 'Y')
 			{
-				_db.typePC = typesPC[*lenghtTypesPC - 1];
+				_db.typePC = typesPC[lenghtTPC - 1];
 			}
 			else
 			{
-				int choIce = -1;
-				printf("\nВыберите тип ПК из списка и введите порядковый номер типа далее:");
-				for (int i = 0; i < lenghtTypesPC; i++)
-				{
-					printf("\n%d) %s", i, typesPC[i]);
-				}
-				do
-				{
-					printf("\nВведите порядковый номер от 0 до %d = ", lenghtTypesPC - 1);
-					scanf_s("%d", &choIce);
-				} while (choIce < 0 || choIce >= lenghtTypesPC);
-				_db.typePC = typesPC[choIce];
+				_db = ChoiceType(lenghtTPC, typesPC, _db);
 			}
 		}
 		else
 		{
-			int choIce = -1;
-			printf("Выберите тип ПК из списка и введите порядковый номер типа далее:");
-			for (int i = 0; i < lenghtTypesPC; i++)
-			{
-				printf("\n%d) %s\n", i, typesPC[i].nameType);
-			}
-			do
-			{
-				printf("Введите порядковый номер от 0 до %d = ", lenghtTypesPC - 1);
-				scanf_s("%d", &choIce);
-			} while (choIce < 0 || choIce >= lenghtTypesPC);
-			_db.typePC = typesPC[choIce];
+			_db = ChoiceType(lenghtTPC,typesPC,_db);
 		}
 	}
 	fseek(stdin, 0, SEEK_END);
 	return _db;
 }
 
-
 //добавление элемента между элементами
-void addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  TypePC *typesPC) {
-
+void addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  TypePC *typesPC) 
+{
 	struct list *temp, *p, *cur = NULL;
 	int i = 0, a = -1;
 	fseek(stdin, 0, SEEK_END);
@@ -218,11 +206,12 @@ void addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  Typ
 		{
 			printf("\nEnter the element after which you want to add the element = ");
 			scanf_s("%d", &a);
-		} while (a == -1);
+		} 
+		while (a == -1);
 		cur = head;
 		if (a > 0)
 		{
-			while (i < a & cur->next != NULL)
+			while ((i < a) & (cur->next != NULL))
 			{
 				cur = cur->next;
 				i++;
@@ -253,29 +242,28 @@ void addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  Typ
 			printf("Not element #%d", a - 1);
 		}
 	}
-	else {
+	else 
+	{
 		printf("This element == head!!! & head->next = NULL!!!!");
 	}
 }
 
 //добавление элемента в конец списка
-void addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC,int *lenghtLists) {
-
+void addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC,int *lenghtLists) 
+{
 	struct list *temp, *cur;
-
 	cur = head;
-
 	while (cur->next != NULL)
 	{
 		cur = cur->next;
 	}
-
-
 	struct db newItem = dbEnterData(lenghtTypesPC, typesPC);
 	temp = (struct list*)malloc(sizeof(struct list));
 	cur->next = temp; // предыдущий узел указывает на создаваемый
 	temp->_db = newItem; // сохранение поля данных добавляемого узла
 	temp->prev = cur; // созданный узел указывает на предыдущий узел
 	temp->next = NULL;
-	*lenghtLists++;
+	int b = *lenghtLists;
+	b++;
+	*lenghtLists = b;;
 }

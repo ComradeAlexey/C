@@ -39,10 +39,90 @@ struct editIP EditIP(int numPart)
 	edit.isString = isString;
 	return edit;
 }
-void EditElement(struct list *head)
+
+int DoWhileEIP(int numPart)
+{
+	struct editIP edit;
+	do
+	{
+		edit = EditIP(numPart);
+	} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
+	return edit.a;
+}
+
+char* EditString(char *name, int lenghtString)
+{
+	char *str;
+	str = (char *)malloc(lenghtString * sizeof(char));
+	printf("Enter %s p.s. only a,b,c... and 1,2,3 other symbols delete! = ", name);
+	scanf_s("%s", str, lenghtString);
+	ClearTrash(str, lenghtString);
+	fseek(stdin, 0, SEEK_END);
+	return str;
+}
+
+void ChoiceYN(char *str, char *choice)
+{
+	int b;
+	do
+	{
+		printf("\n%s? Если да то введите Y(y), иначе N(n) = ", str);
+		scanf_s("%c", choice);
+		fseek(stdin, 0, SEEK_END);
+		switch (*choice)
+		{
+		case 'N':
+			b = 1;
+			break;
+		case 'n':
+			b = 1;
+			break;
+		case 'y':
+			b = 1;
+			break;
+		case 'Y':
+			b = 1;
+			break;
+		default:
+			b = 0;
+			break;
+		}
+	} while (b == 0);
+}
+struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db)
+{
+	int choIce = -1;
+	printf("\nВыберите тип ПК из списка и введите порядковый номер типа далее:");
+	for (int i = 0; i < lenghtTPC; i++)
+	{
+		printf("\n%d) %s", i, typesPC[i]);
+	}
+	do
+	{
+		printf("\nВведите порядковый номер от 0 до %d = ", lenghtTPC - 1);
+		scanf_s("%d", &choIce);
+	} while (choIce < 0 || choIce >= lenghtTPC);
+	_db.typePC = typesPC[choIce];
+	return _db;
+}
+
+struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC)
+{
+	int i = *lenghtTypesPC;
+	i++;
+	typesPC = (struct  TypePC*)realloc(typesPC, i * sizeof(struct TypePC));
+	printf("Вводите название типа ПК = ");
+	typesPC[i - 1].typeNum = i;
+	scanf_s("%s", typesPC[i - 1].nameType, 10);
+	*lenghtTypesPC = i;
+	return typesPC;
+}
+
+void EditElement(struct list *head, int *lenghtTypesPC, struct TypePC *typesPC)
 {
 	struct list *cur = head;
 	int lenght, i = 0;
+	int lenghtTPC = *lenghtTypesPC;//данные указателя lenghtTypesPC
 	do
 	{
 		printf("Введите индекс редактируемого элемента(отчёт начинается с 0) = ");
@@ -79,70 +159,57 @@ void EditElement(struct list *head)
 			switch (choiceIP)
 			{
 			case 1:
-				do
-				{
-					edit = EditIP(1);
-				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
-				cur->_db._ip.oneCell = edit.a;
+				cur->_db._ip.oneCell = DoWhileEIP(1);
 				break;
 			case 2:
-				do
-				{
-					edit = EditIP(2);
-				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
-				cur->_db._ip.twoCell = edit.a;
+				cur->_db._ip.twoCell = DoWhileEIP(2);
 				break;
 			case 3:
-				do
-				{
-					edit = EditIP(3);
-				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
-				cur->_db._ip.threeCell = edit.a;
+				cur->_db._ip.threeCell = DoWhileEIP(3);
 				break;
 			case 4:
-				do
-				{
-					edit = EditIP(4);
-				} while (edit.a < 0 || edit.a > 255 || !edit.isString == 0);
-				cur->_db._ip.fourCell = edit.a;
+				cur->_db._ip.fourCell = DoWhileEIP(4);
 				break;
 			}
 			fseek(stdin, 0, SEEK_END);
 			break;
 		case 2:
-			printf("Введите имя пользователя p.s. только a,b,c... и 1,2,3, остальные символы удаляются! = ");
-			scanf_s("%10s", &cur->_db.name_user);
-			ClearTrash(cur->_db.name_user, 10);
-			fseek(stdin, 0, SEEK_END);
+			cur->_db.name_user = AddString("Name User", 10);
 			break;
 		case 3:
-			printf("\nВведите фамилию пользователя p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
-			scanf_s("%10s", &cur->_db.surname_user);
-			ClearTrash(cur->_db.surname_user, 10);
-			fseek(stdin, 0, SEEK_END);
+			cur->_db.surname_user = AddString("SurName User", 10);
 			break;
 		case 4:
-			printf("\nВведите группу пользователя пользователя p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
-
-			scanf_s("%5s", &cur->_db.groupe_user);
-			fseek(stdin, 0, SEEK_END);
-			ClearTrash(cur->_db.groupe_user, 5);
+			cur->_db.groupe_user = AddString("Groupe user", 5);
 			break;
 		case 5:
-			printf("\nВведите имя ПК p.s. only a,b,c... and 1,2,3 other symbols delete!  = ");
-			scanf_s("%10s", &cur->_db.name_pc);
-			fseek(stdin, 0, SEEK_END);
-			ClearTrash(cur->_db.name_pc, 10);
+			cur->_db.name_pc = AddString("Name PC", 10);
 			break;
-			/*case 6:
-
-			do
+		case 6:
+		{
+			char choice = '0';
+			int b = 0;
+			ChoiceYN("Хотите ли Вы добавить новый тип ПК", &choice);
+			if (choice == 'y' || choice == 'Y')
 			{
-			printf("\nВведите имя пользователя \n p.s. 0 -> one type, 1 -> two type, 2 -> three type \n = ");
-			scanf_s("%d", &type);
-			} while (!(type == 1 || type == 2 || type == 0));
-			fseek(stdin, 0, SEEK_END);
-			break;*/
+				typesPC = AddInListTypePC(lenghtTypesPC, typesPC);
+				lenghtTPC = *lenghtTypesPC;
+				ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип", &choice);
+				if (choice == 'y' || choice == 'Y')
+				{
+					cur->_db.typePC = typesPC[lenghtTPC - 1];
+				}
+				else
+				{
+					cur->_db = ChoiceType(lenghtTPC, typesPC, cur->_db);
+				}
+			}
+			else
+			{
+				cur->_db = ChoiceType(lenghtTPC, typesPC, cur->_db);
+			}
+		}
+		break;
 		}
 	}
 	else {

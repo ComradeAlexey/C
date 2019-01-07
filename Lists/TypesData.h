@@ -29,10 +29,10 @@ struct TypePC
 struct db
 {
 	struct ip _ip;//структура ip адресса, состоит из четырёх переменных, каждая из которых отвечает за свою ячейку адресса
-	char name_pc[10];//название ПК
-	char name_user[10];//Имя пользователя
-	char surname_user[10];//Фамилия пользователя
-	char groupe_user[5];//Название группы
+	char *name_pc;//название ПК
+	char *name_user;//Имя пользователя
+	char *surname_user;//Фамилия пользователя
+	char *groupe_user;//Название группы
 	struct TypePC typePC;//Тип ПК
 };
 

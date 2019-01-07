@@ -1,35 +1,22 @@
+int ForCTS(char c, char from, char to, int isNotTrash)
+{
+	for (char i = from; i <= to; i++)
+	{
+		if (c == i)
+			isNotTrash++;
+	}
+	return isNotTrash;
+}
 char ClearTrashSymbol(char c)
 {
-	int isTrash = 0;
+	int isNotTrash = 0;
 
-	for (char i = 'a'; i <= 'z'; i++)
-	{
-		if (c == i)
-			isTrash++;
-	}
-	for (char i = 'A'; i <= 'Z'; i++)
-	{
-		if (c == i)
-			isTrash++;
-	}
-
-	for (char i = 'à'; i <= 'ÿ'; i++)
-	{
-		if (c == i)
-			isTrash++;
-	}
-	for (char i = 'À'; i <= 'ß'; i++)
-	{
-		if (c == i)
-			isTrash++;
-	}
-
-	for (char i = '0'; i <= '9'; i++)
-	{
-		if (c == i)
-			isTrash++;
-	}
-	if (isTrash > 0)
+	isNotTrash = ForCTS(c, 'a', 'z', isNotTrash);
+	isNotTrash = ForCTS(c, 'A', 'Z', isNotTrash);
+	isNotTrash = ForCTS(c, 'à', 'ÿ', isNotTrash);
+	isNotTrash = ForCTS(c, 'À', 'ß', isNotTrash);
+	isNotTrash = ForCTS(c, '0', '9', isNotTrash);
+	if (isNotTrash > 0)
 		return c;
 	else return ' ';
 }

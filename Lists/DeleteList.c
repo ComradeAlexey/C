@@ -1,5 +1,5 @@
 #include"TypesData.h"
-void deletelem(struct list *lst,int *lenghtLists) {
+void DeletElemAfter(struct list *lst,int *lenghtLists) {
 	struct list *cur = lst, *prev, *next;
 	int a = 0, i = 0;
 	do
@@ -23,7 +23,10 @@ void deletelem(struct list *lst,int *lenghtLists) {
 			if (next != NULL)
 				next->prev = cur->prev; // переставляем указатель
 			free(cur); // освобождаем память удаляемого элемента
-			*lenghtLists--;
+			int b;
+			b = *lenghtLists;
+			b--;
+			*lenghtLists = b;
 		}
 		else
 		{
@@ -48,7 +51,10 @@ void DeleteEndElement(struct list *root, int *lenghtLists)
 		cur->prev->next = NULL;
 		free(cur);
 		printf("Element deleting!");
-		*lenghtLists--;
+		int b;
+		b = *lenghtLists;
+		b--;
+		*lenghtLists = b;
 	}
 	else
 	{
@@ -56,14 +62,17 @@ void DeleteEndElement(struct list *root, int *lenghtLists)
 	}
 }
 
-struct list * deleteHead(struct list *root, int *lenghtLists) {
+struct list * DeleteHead(struct list *root, int *lenghtLists) {
 	struct list *temp;
 	if (root->next != NULL)
 	{
 		temp = root->next;
 		free(root);
 		printf("Element deleting!");
-		*lenghtLists--;
+		int b;
+		b = *lenghtLists;
+		b--;
+		*lenghtLists = b;
 		return temp;
 	}
 	else
