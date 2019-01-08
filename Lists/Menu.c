@@ -59,13 +59,13 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 				EditElement(head, lenghtTypesPC, typesPC, lenghtLists);
 				break;
 			case 4:
-				deletelem(head,lenghtLists);
+				DeletElemAfter(head,lenghtLists);
 				break;
 			case 5:
 				DeleteEndElement(head, lenghtLists);
 				break;
 			case 6:
-				head = deleteHead(head, lenghtLists);
+				head = DeleteHead(head, lenghtLists);
 				break;
 			case 7:
 				listPrint(head);

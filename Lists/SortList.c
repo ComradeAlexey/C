@@ -9,6 +9,7 @@ struct list * Swap(struct list *first, struct list *second, struct list *head)
 
 	return head;
 }
+
 int BoolReturnNameUser(struct list *p)
 {
 	if (p->_db.name_user[0] > p->next->_db.name_user[0])
@@ -18,6 +19,7 @@ int BoolReturnNameUser(struct list *p)
 	else
 		return 0;
 }
+
 int BoolReturnNameTypePC(struct list *p)
 {
 	if (p->_db.typePC.nameType[0] > p->next->_db.typePC.nameType[0])
@@ -27,6 +29,7 @@ int BoolReturnNameTypePC(struct list *p)
 	else
 		return 0;
 }
+
 int BoolReturnSurnameUser(struct list *p)
 {
 	if (p->_db.surname_user[0] > p->next->_db.surname_user[0])
@@ -36,6 +39,7 @@ int BoolReturnSurnameUser(struct list *p)
 	else
 		return 0;
 }
+
 int BoolReturnGroupeUser(struct list *p)
 {
 	if (p->_db.groupe_user[0] > p->next->_db.groupe_user[0])
@@ -45,6 +49,7 @@ int BoolReturnGroupeUser(struct list *p)
 	else
 		return 0;
 }
+
 int BoolReturnNamePC(struct list *p)
 {
 	if (p->_db.name_pc[0] > p->next->_db.name_pc[0])
@@ -54,6 +59,7 @@ int BoolReturnNamePC(struct list *p)
 	else
 		return 0;
 }
+
 struct list * SwapInAscendingSort(struct list *p, struct list *head, int *numSwap, int typeSort)
 {
 	int resultBool = 0, _numSwap;
@@ -84,16 +90,18 @@ struct list * SwapInAscendingSort(struct list *p, struct list *head, int *numSwa
 		return head;
 	}
 }
+
 struct list * AscendingSort(struct list *head, int typeSort, int *lenghtLists)
 {
 	struct list *p = head;
 	int index = 0;
-	if (*lenghtLists == 1)
+	int lL = *lenghtLists;
+	if (lL == 1)
 	{
 		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
 		return head;
 	}
-	else if (*lenghtLists == 2)
+	else if (lL == 2)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
@@ -109,9 +117,9 @@ struct list * AscendingSort(struct list *head, int typeSort, int *lenghtLists)
 			numSwap = 0;
 			index = 0;
 			p = head;
-			while (index < *lenghtLists - 1)
+			while (index < lL - 1)
 			{
-				if (index <= *lenghtLists - 2)
+				if (index <= lL - 2)
 				{
 					head = SwapInAscendingSort(p, head, numSwap, typeSort);
 				}

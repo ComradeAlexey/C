@@ -13,8 +13,6 @@ char ClearTrashSymbol(char c)
 
 	isNotTrash = ForCTS(c, 'a', 'z', isNotTrash);
 	isNotTrash = ForCTS(c, 'A', 'Z', isNotTrash);
-	isNotTrash = ForCTS(c, 'à', 'ÿ', isNotTrash);
-	isNotTrash = ForCTS(c, 'À', 'ß', isNotTrash);
 	isNotTrash = ForCTS(c, '0', '9', isNotTrash);
 	if (isNotTrash > 0)
 		return c;

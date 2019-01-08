@@ -1,4 +1,7 @@
 #pragma once
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
 struct ip
 {
 	unsigned char oneCell;//перва€ €чейка адресса
@@ -6,10 +9,6 @@ struct ip
 	unsigned char threeCell;//треть€ €чейка адресса
 	unsigned char fourCell;//четвЄрта€ €чейка адресса
 };
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <malloc.h>
 struct editIP
 {
 	int a;
@@ -42,3 +41,6 @@ struct list
 	struct list *next; // указатель на следующий элемент
 	struct list *prev; // указатель на предыдущий элемент
 };
+void ChoiceYN(char *str, char *choice);
+struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db);
+struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC);

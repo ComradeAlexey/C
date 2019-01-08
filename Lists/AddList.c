@@ -1,4 +1,5 @@
 #include"TypesData.h"
+#include"ClearTrash.h"
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <malloc.h>
@@ -17,18 +18,6 @@ struct list * init(struct db a,int *lenghtLists)  // а - значение первого узла
 	*lenghtLists = b;;
 	return(lst);
 } 
-
-struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC)
-{
-	int i = *lenghtTypesPC;
-	i++;
-	typesPC = (struct  TypePC*)realloc(typesPC, i * sizeof(struct TypePC));
-	printf("Вводите название типа ПК = ");
-	typesPC[i-1].typeNum = i;
-	scanf_s("%s", typesPC[i - 1].nameType, 10);
-	*lenghtTypesPC = i;
-	return typesPC;
-}
 
 struct addIP AddPartIP(int numPart)
 {
@@ -90,56 +79,12 @@ char* AddString(char *name, int lenghtString)
 	char *str;
 	str = (char *)malloc(lenghtString * sizeof(char));
 	printf("Enter %s p.s. only a,b,c... and 1,2,3 other symbols delete! = ", name);
-	scanf_s("%s", str, lenghtString);
+	scanf_s("%s", str, lenghtString+1);
 	ClearTrash(str, lenghtString);
 	fseek(stdin, 0, SEEK_END);
 	return str;
 }
 
-void ChoiceYN(char *str, char *choice)
-{
-	int b;
-	do
-	{
-		printf("\n%s? Если да то введите Y(y), иначе N(n) = ",str);
-		scanf_s("%c", choice);
-		fseek(stdin, 0, SEEK_END);
-		switch (*choice)
-		{
-		case 'N':
-			b = 1;
-			break;
-		case 'n':
-			b = 1;
-			break;
-		case 'y':
-			b = 1;
-			break;
-		case 'Y':
-			b = 1;
-			break;
-		default:
-			b = 0;
-			break;
-		}
-	} while (b == 0);
-}
-struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db)
-{
-	int choIce = -1;
-	printf("\nВыберите тип ПК из списка и введите порядковый номер типа далее:");
-	for (int i = 0; i < lenghtTPC; i++)
-	{
-		printf("\n%d) %s", i, typesPC[i]);
-	}
-	do
-	{
-		printf("\nВведите порядковый номер от 0 до %d = ", lenghtTPC - 1);
-		scanf_s("%d", &choIce);
-	} while (choIce < 0 || choIce >= lenghtTPC);
-	_db.typePC = typesPC[choIce];
-	return _db;
-}
 struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 {
 	struct db _db;
@@ -173,7 +118,7 @@ struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 		ChoiceYN("Хотите ли Вы добавить новый тип ПК",&choice);
 		if (choice == 'y' || choice == 'Y')
 		{
-			AddInListTypePC(lenghtTypesPC, typesPC);
+			typesPC = AddInListTypePC(lenghtTypesPC, typesPC);
 			lenghtTPC = *lenghtTypesPC;
 			ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип", &choice);
 			if (choice == 'y' || choice == 'Y')
