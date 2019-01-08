@@ -56,7 +56,7 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 				addElemToEnd(head, lenghtTypesPC, typesPC, lenghtLists);
 				break;
 			case 3:
-				EditElement(head, lenghtTypesPC, typesPC, lenghtLists);
+				EditElement(head, lenghtTypesPC, typesPC);
 				break;
 			case 4:
 				DeletElemAfter(head,lenghtLists);
