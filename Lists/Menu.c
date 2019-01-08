@@ -89,7 +89,8 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 				return;
 				break;
 			}
-			system("pause");
 		}
+		printf("\n__________________________________________________________________\n");
+		system("pause");
 	}
 }
