@@ -1,13 +1,3 @@
-﻿  AddList.c
-c:\users\alexei\source\repos\lists\lists\addlist.c(94): warning C4013: ClearTrash: нет определения; предполагается "extern" с возвратом типа "int"
-c:\users\alexei\source\repos\lists\lists\addlist.c(105): warning C4473: "scanf_s": передано недостаточно аргументов для строки формата
-  c:\users\alexei\source\repos\lists\lists\addlist.c(105): note: заполнители и их параметры ожидают переменное число аргументов в количестве 2, но было предоставлено 1
-  c:\users\alexei\source\repos\lists\lists\addlist.c(105): note: отсутствующий вариативный аргумент "2" требуется для строки форматирования "%c"
-  c:\users\alexei\source\repos\lists\lists\addlist.c(105): note: этот аргумент используется в качестве размера буфера
-c:\users\alexei\source\repos\lists\lists\addlist.c(133): warning C4477: "printf": в строке форматирования "%s" требуется аргумент типа "char *", но вариативный аргумент "2" имеет тип "TypePC"
-c:\users\alexei\source\repos\lists\lists\addlist.c(150): warning C4101: isNull1: неиспользованная локальная переменная
-c:\users\alexei\source\repos\lists\lists\addlist.c(150): warning C4101: isNull2: неиспользованная локальная переменная
-c:\users\alexei\source\repos\lists\lists\addlist.c(146): warning C4101: add: неиспользованная локальная переменная
-  Menu.c
-  Создание кода...
+﻿  Menu.c
+c:\users\alexei\source\repos\lists\lists\menu.c(59): warning C4020: EditElement: слишком много фактических параметров
   Lists.vcxproj -> C:\Users\Alexei\source\repos\Lists\Debug\Lists.exe

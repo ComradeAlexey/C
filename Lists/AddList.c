@@ -115,12 +115,12 @@ struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 	{
 		char choice = '0';
 		int b = 0;
-		ChoiceYN("Хотите ли Вы добавить новый тип ПК",&choice);
+		choice = ChoiceYN("Хотите ли Вы добавить новый тип ПК");
 		if (choice == 'y' || choice == 'Y')
 		{
 			typesPC = AddInListTypePC(lenghtTypesPC, typesPC);
 			lenghtTPC = *lenghtTypesPC;
-			ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип", &choice);
+			choice = ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип");
 			if (choice == 'y' || choice == 'Y')
 			{
 				_db.typePC = typesPC[lenghtTPC - 1];

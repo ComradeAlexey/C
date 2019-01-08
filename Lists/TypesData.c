@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include"TypesData.h"
-void ChoiceYN(char *str, char *choice)
+char  ChoiceYN(char *str)
 {
-	*choice = ' ';
+	char choice[2];
 	int b;
 	do
 	{
 		printf("\n%s? Если да то введите Y(y), иначе N(n) = ", str);
-		scanf_s("%c", choice);
+		scanf_s("%s", choice,2);
 		fseek(stdin, 0, SEEK_END);
-		switch (*choice)
+		switch (choice[0])
 		{
 		case 'N':
 			b = 1;
@@ -30,6 +30,7 @@ void ChoiceYN(char *str, char *choice)
 			break;
 		}
 	} while (b == 0);
+	return choice[0];
 }
 
 struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db)

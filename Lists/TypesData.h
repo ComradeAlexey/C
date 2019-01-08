@@ -41,6 +41,6 @@ struct list
 	struct list *next; // указатель на следующий элемент
 	struct list *prev; // указатель на предыдущий элемент
 };
-void ChoiceYN(char *str, char *choice);
+char ChoiceYN(char *str);
 struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db);
 struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC);
