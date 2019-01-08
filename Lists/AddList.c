@@ -88,11 +88,10 @@ char* AddString(char *name, int lenghtString)
 struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 {
 	struct db _db;
-	struct addIP add;
 	int lenghtTPC = *lenghtTypesPC;//данные указателя lenghtTypesPC
 	//ввод IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
-	int a = 0, isString = 0, isNull1, isNull2;
+	int a = 0, isString = 0;
 
 	_db._ip.oneCell = AddIP(1);
 	_db._ip.twoCell = AddIP(2);
@@ -140,7 +139,7 @@ struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 }
 
 //добавление элемента между элементами
-void addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  TypePC *typesPC) 
+struct list * addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  TypePC *typesPC)
 {
 	struct list *temp, *p, *cur = NULL;
 	int i = 0, a = -1;
@@ -191,10 +190,11 @@ void addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  Typ
 	{
 		printf("This element == head!!! & head->next = NULL!!!!");
 	}
+	return head;
 }
 
 //добавление элемента в конец списка
-void addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC,int *lenghtLists) 
+struct list * addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC,int *lenghtLists)
 {
 	struct list *temp, *cur;
 	cur = head;
@@ -211,4 +211,5 @@ void addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC
 	int b = *lenghtLists;
 	b++;
 	*lenghtLists = b;;
+	return head;
 }
