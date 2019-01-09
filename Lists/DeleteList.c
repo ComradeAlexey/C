@@ -78,6 +78,6 @@ struct list * DeleteHead(struct list *root, int *lenghtLists) {
 	else
 	{
 		printf("Only head there is in the list!!!");
-		return temp;
+		return root;
 	}
 }

@@ -35,12 +35,26 @@ struct db
 	struct TypePC typePC;//Тип ПК
 };
 
+struct DBAndTPC
+{
+	struct TypePC *typePC;
+	struct db _db;
+};
 struct list
 {
 	struct db _db; // поле данных
 	struct list *next; // указатель на следующий элемент
 	struct list *prev; // указатель на предыдущий элемент
 };
+
+struct ListAndTypePC
+{
+	struct list *list;
+	struct TypePC *typePC;
+};
+
 char ChoiceYN(char *str);
 struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db);
 struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC);
+char* AddString(char *name, int lenghtString);
+int AddIP(int numPart);

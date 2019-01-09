@@ -86,9 +86,9 @@ struct list * SwapInAscendingSort(struct list *p, struct list *head, int *numSwa
 		head = Swap(p, p->next, head);
 		_numSwap = *numSwap;
 		_numSwap++;
-		numSwap = &_numSwap;
-		return head;
+		*numSwap = _numSwap;
 	}
+	return head;
 }
 
 struct list * AscendingSort(struct list *head, int typeSort, int *lenghtLists)
@@ -99,14 +99,13 @@ struct list * AscendingSort(struct list *head, int typeSort, int *lenghtLists)
 	if (lL == 1)
 	{
 		printf("Сортировка не может быть выполнена т.к. в списке всего лишь один элемент!");
-		return head;
 	}
 	else if (lL == 2)
 	{
 		if (p->_db.name_user[0] > p->next->_db.name_user[0])
 		{
 			printf("Сортировка выполнена!");
-			return head = Swap(p, p->next, head);
+			head = Swap(p, p->next, head);
 		}
 	}
 	else
@@ -121,13 +120,13 @@ struct list * AscendingSort(struct list *head, int typeSort, int *lenghtLists)
 			{
 				if (index <= lL - 2)
 				{
-					head = SwapInAscendingSort(p, head, numSwap, typeSort);
+					head = SwapInAscendingSort(p, head, &numSwap, typeSort);
 				}
 				p = p->next;
 				index++;
 			}
 		} while (numSwap > 0);
 		printf("Сортировка выполнена!");
-		return head;
 	}
+	return head;
 }

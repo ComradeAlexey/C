@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <stdlib.h>
+ 
 struct list * init(struct db a,int *lenghtLists)  // а - значение первого узла
 {
 	struct list *lst;
@@ -19,75 +20,10 @@ struct list * init(struct db a,int *lenghtLists)  // а - значение первого узла
 	return(lst);
 } 
 
-struct addIP AddPartIP(int numPart)
-{
-	struct addIP add;
-	int a = 0, isString = 0;
-	a = 0;
-	isString = 0;
-	char str[4];
-	printf("Введите %d часть IP = ", numPart);
-	scanf_s("%s", &str,4);
-	fseek(stdin, 0, SEEK_END);
-	for (int i = 0; i < 3; i++)
-	{
-
-		if (str[i] == '\0')
-		{
-			i = 3;
-		}
-		else if ((str[i] > '9' || str[i] < '0') & (str[i] != '\0'))
-		{
-			isString = 1;
-		}
-	}
-	if (isString == 0)
-	{
-		if (str[1] == '\0')
-		{
-			a += str[0] - '0';
-		}
-		else if (str[2] == '\0')
-		{
-			a += ((str[0] - '0') * 10) + (str[1] - '0');
-		}
-		else
-		{
-			a += (((str[0] - '0') * 100) + ((str[1] - '0') * 10) + (str[2] - '0'));
-		}
-	}
-	add.a = a;
-	add.isString = isString;
-	return add;
-}
-
-int AddIP(int numPart)
-{
-	int ip;
-	struct addIP add;
-	do
-	{
-		add = AddPartIP(numPart);
-	} while (add.a < 0 || add.a > 255 || !add.isString == 0);
-	ip = add.a;
-
-	return ip;
-}
-
-char* AddString(char *name, int lenghtString)
-{
-	char *str;
-	str = (char *)malloc(lenghtString * sizeof(char));
-	printf("Enter %s p.s. only a,b,c... and 1,2,3 other symbols delete! = ", name);
-	scanf_s("%s", str, lenghtString+1);
-	ClearTrash(str, lenghtString);
-	fseek(stdin, 0, SEEK_END);
-	return str;
-}
-
-struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
+struct DBAndTPC dbEnterData(int *lenghtTypesPC, struct TypePC *typesPC)
 {
 	struct db _db;
+	struct DBAndTPC _DBAndTPC;
 	int lenghtTPC = *lenghtTypesPC;//данные указателя lenghtTypesPC
 	//ввод IP
 	printf("Enter of IP\n p.s. interval from 0 to 255\n");
@@ -135,12 +71,15 @@ struct db dbEnterData(int *lenghtTypesPC, struct  TypePC *typesPC)
 		}
 	}
 	fseek(stdin, 0, SEEK_END);
-	return _db;
+	_DBAndTPC.typePC = typesPC;
+	_DBAndTPC._db = _db;
+	return _DBAndTPC;
 }
 
 //добавление элемента между элементами
-struct list * addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  TypePC *typesPC)
+struct ListAndTypePC addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, struct  TypePC *typesPC)
 {
+	struct ListAndTypePC LATPC;
 	struct list *temp, *p, *cur = NULL;
 	int i = 0, a = -1;
 	fseek(stdin, 0, SEEK_END);
@@ -165,7 +104,11 @@ struct list * addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, st
 		{
 			if (i == a)
 			{
-				struct db newItem = dbEnterData(lenghtTypesPC, typesPC);
+				struct DBAndTPC _DBAndTPC;
+				struct db newItem; 
+				_DBAndTPC = dbEnterData(lenghtTypesPC, typesPC);
+				typesPC = _DBAndTPC.typePC;
+				newItem = _DBAndTPC._db;
 				temp = (struct list*)malloc(sizeof(struct list));
 				p = cur->next; // сохранение указателя на следующий узел
 				cur->next = temp; // предыдущий узел указывает на создаваемый
@@ -174,7 +117,11 @@ struct list * addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, st
 				temp->prev = cur; // созданный узел указывает на предыдущий узел
 				if (p != NULL)
 					p->prev = temp;
-				*lenghtLists++;
+				int lL = *lenghtLists;
+				lL++;
+				*lenghtLists = lL; 
+				LATPC.list = head;
+				LATPC.typePC = typesPC;
 			}
 			else
 			{
@@ -190,19 +137,25 @@ struct list * addelem(struct list *head,int *lenghtLists, int *lenghtTypesPC, st
 	{
 		printf("This element == head!!! & head->next = NULL!!!!");
 	}
-	return head;
+	
+	return LATPC;
 }
 
 //добавление элемента в конец списка
-struct list * addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC,int *lenghtLists)
+struct ListAndTypePC addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC *typesPC,int *lenghtLists)
 {
+	struct ListAndTypePC LATPC;
 	struct list *temp, *cur;
 	cur = head;
 	while (cur->next != NULL)
 	{
 		cur = cur->next;
 	}
-	struct db newItem = dbEnterData(lenghtTypesPC, typesPC);
+	struct DBAndTPC _DBAndTPC;
+	struct db newItem;
+	_DBAndTPC = dbEnterData(lenghtTypesPC, typesPC);
+	typesPC = _DBAndTPC.typePC;
+	newItem = _DBAndTPC._db;
 	temp = (struct list*)malloc(sizeof(struct list));
 	cur->next = temp; // предыдущий узел указывает на создаваемый
 	temp->_db = newItem; // сохранение поля данных добавляемого узла
@@ -210,6 +163,8 @@ struct list * addElemToEnd(struct list *head, int *lenghtTypesPC, struct  TypePC
 	temp->next = NULL;
 	int b = *lenghtLists;
 	b++;
-	*lenghtLists = b;;
-	return head;
+	*lenghtLists = b;
+	LATPC.list = head;
+	LATPC.typePC = typesPC;
+	return LATPC;
 }

@@ -18,10 +18,13 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 			int choice;
 			scanf_s("%d", &choice);
 			struct db _db;
+			struct DBAndTPC _DBAndTPC;
 			switch (choice)
 			{
-			case 1:
-				_db = dbEnterData(lenghtTypesPC, typesPC);
+			case 1:  
+				_DBAndTPC = dbEnterData(lenghtTypesPC, typesPC);
+				typesPC = _DBAndTPC.typePC;
+				_db = _DBAndTPC._db;
 				head = init(_db, lenghtLists);
 				break;
 			case 2:
@@ -47,16 +50,22 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 			printf("13)Выйти\nВведите число = ");
 			int choice;
 			scanf_s("%d", &choice);
+			struct ListAndTypePC LATPC;
 			switch (choice)
 			{
 			case 1:
-				head = addelem(head, lenghtLists, lenghtTypesPC, typesPC);
+
+				LATPC = addelem(head, lenghtLists, lenghtTypesPC, typesPC);
+				head = LATPC.list;
+				typesPC = LATPC.typePC;
 				break;
 			case 2:
-				head = addElemToEnd(head, lenghtTypesPC, typesPC, lenghtLists);
+				LATPC = addElemToEnd(head, lenghtTypesPC, typesPC, lenghtLists);
+				head = LATPC.list;
+				typesPC = LATPC.typePC;
 				break;
 			case 3:
-				EditElement(head, lenghtTypesPC, typesPC);
+				EditElement(head, lenghtTypesPC, typesPC, *lenghtLists-1);
 				break;
 			case 4:
 				DeletElemAfter(head,lenghtLists);

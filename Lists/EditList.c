@@ -1,11 +1,12 @@
 #include"TypesData.h"
+#include"ClearTrash.h"
 struct editIP EditIP(int numPart)
 {
 	struct editIP edit;
 	int a = 0, isString = 0;
 	a = 0;
 	isString = 0;
-	char str[3];
+	char str[4];
 	printf("Введите %d часть IP = ", numPart);
 	scanf_s("%s", &str,4);
 	fseek(stdin, 0, SEEK_END);
@@ -61,14 +62,14 @@ char* EditString(char *name, int lenghtString)
 	return str;
 }
 
-void EditElement(struct list *head, int *lenghtTypesPC, struct TypePC *typesPC)
+void EditElement(struct list *head, int *lenghtTypesPC, struct TypePC *typesPC, int lenghtLists)
 {
 	struct list *cur = head;
 	int lenght, i = 0;
 	int lenghtTPC = *lenghtTypesPC;//данные указателя lenghtTypesPC
 	do
 	{
-		printf("Введите индекс редактируемого элемента(отчёт начинается с 0) = ");
+		printf("Введите индекс редактируемого элемента(отчёт начинается с 0 до %d) = ", lenghtLists);
 		scanf_s("%d", &lenght);
 	} while (lenght < 0);
 	while ((i < lenght) & (cur->next != NULL))
@@ -98,7 +99,6 @@ void EditElement(struct list *head, int *lenghtTypesPC, struct TypePC *typesPC)
 				scanf_s("%d", &choiceIP);
 			} while (choiceIP < 1 || choiceIP >4);
 			printf("Введите IP\n p.s. интервал значения от 0 до 255\n");
-			struct editIP edit;
 			switch (choiceIP)
 			{
 			case 1:
@@ -132,12 +132,12 @@ void EditElement(struct list *head, int *lenghtTypesPC, struct TypePC *typesPC)
 		{
 			char choice = '0';
 			int b = 0;
-			ChoiceYN("Хотите ли Вы добавить новый тип ПК", &choice);
+			choice = ChoiceYN("Хотите ли Вы добавить новый тип ПК");
 			if (choice == 'y' || choice == 'Y')
 			{
 				typesPC = AddInListTypePC(lenghtTypesPC, typesPC);
 				lenghtTPC = *lenghtTypesPC;
-				ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип", &choice);
+				choice = ChoiceYN("Хотите ли Вы добавить новый тип ПК в качестве типа данного ПК или выбрать другой тип");
 				if (choice == 'y' || choice == 'Y')
 				{
 					cur->_db.typePC = typesPC[lenghtTPC - 1];

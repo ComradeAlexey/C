@@ -1,7 +1,7 @@
 #include"TypesData.h"
 void PrintListTypePC(struct TypePC *typesPC,int *lenghtTypesPC)
 {
-	for (int i = 0; i < &lenghtTypesPC; i++)
+	for (int i = 0; i < *lenghtTypesPC; i++)
 	{
 		printf("\n Номер элемента списка типов ПК %d содержимое %s", i, typesPC[i].nameType);
 	}
