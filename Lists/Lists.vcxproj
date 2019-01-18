@@ -143,6 +143,7 @@
     <ClCompile Include="ClearTrash.c" />
     <ClCompile Include="DeleteList.c" />
     <ClCompile Include="EditList.c" />
+    <ClCompile Include="FileWork.c" />
     <ClCompile Include="Lists.c" />
     <ClCompile Include="Menu.c" />
     <ClCompile Include="Print.c" />
@@ -154,6 +155,7 @@
     <ClInclude Include="ClearTrash.h" />
     <ClInclude Include="DeleteList.h" />
     <ClInclude Include="EditList.h" />
+    <ClInclude Include="FileWork.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Print.h" />
     <ClInclude Include="SortList.h" />

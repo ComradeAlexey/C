@@ -5,6 +5,7 @@
 #include"EditList.h"
 #include"SortList.h"
 #include"Print.h"
+#include"FileWork.h"
 void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *typesPC)
 {
 	while (1)
@@ -52,7 +53,9 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 			printf("15)Сортировка по типу ПК\n");
 			printf("16)Сортировка по имени ПК\n");
 			printf("17)Сортировка по IP(в порядке возрастания суммы всех чисел в IP адресе)\n");
-			printf("18)Выйти\nВведите число = ");
+			printf("18)Вывод в файл\n");
+			printf("19)Выйти\nВведите число = ");
+			
 			int choice;
 			scanf_s("%d", &choice);
 			struct ListAndTypePC LATPC;
@@ -121,6 +124,9 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 				head = AscendingSort(head, 6, lenghtLists);
 				break;
 			case 18:
+				WriteFile(head, *lenghtLists);
+				break;
+			case 19:
 				return;
 				break;
 			}
