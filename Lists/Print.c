@@ -9,7 +9,7 @@ void PrintListTypePC(struct TypePC *typesPC,int *lenghtTypesPC)
 void dbPrint(struct db _db)
 {
 	//вывод IP
-	printf("IP = %d.%d.%d.%d \n", _db._ip.oneCell, _db._ip.twoCell, _db._ip.threeCell, _db._ip.fourCell);
+	printf("\nIP = %d.%d.%d.%d \n", _db._ip.oneCell, _db._ip.twoCell, _db._ip.threeCell, _db._ip.fourCell);
 	//вывод имени пользователя
 	printf("Name User = ");
 	for (int i = 0; i < 10; i++)

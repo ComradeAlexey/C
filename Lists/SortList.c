@@ -60,6 +60,28 @@ int BoolReturnNamePC(struct list *p)
 		return 0;
 }
 
+int SumIP(struct ip _ip)
+{
+	int sum = 0;
+	sum += _ip.oneCell;
+	sum += _ip.twoCell;
+	sum += _ip.threeCell;
+	sum += _ip.fourCell;
+
+	return sum;
+}
+int BoolReturnIP(struct list *p)
+{
+	int sum = SumIP(p->_db._ip);
+	int sum1 = SumIP(p->next->_db._ip);
+	if (sum > sum1)
+	{
+		return 1;
+	}
+	else
+		return 0;
+}
+
 struct list * SwapInAscendingSort(struct list *p, struct list *head, int *numSwap, int typeSort)
 {
 	int resultBool = 0, _numSwap;
@@ -79,6 +101,9 @@ struct list * SwapInAscendingSort(struct list *p, struct list *head, int *numSwa
 		break;
 	case 5:
 		resultBool = BoolReturnNameTypePC(p);
+		break;
+	case 6:
+		resultBool = BoolReturnIP(p);
 		break;
 	}
 	if (resultBool == 1)
@@ -102,11 +127,8 @@ struct list * AscendingSort(struct list *head, int typeSort, int *lenghtLists)
 	}
 	else if (lL == 2)
 	{
-		if (p->_db.name_user[0] > p->next->_db.name_user[0])
-		{
-			printf("Сортировка выполнена!");
-			head = Swap(p, p->next, head);
-		}
+		int numSwap = 0;
+		head = SwapInAscendingSort(p, head, &numSwap, typeSort);
 	}
 	else
 	{

@@ -1,5 +1,6 @@
 #include"TypesData.h"
 #include"ClearTrash.h"
+#include "EditList.h"
 struct editIP EditIP(int numPart)
 {
 	struct editIP edit;
@@ -159,3 +160,51 @@ void EditElement(struct list *head, int *lenghtTypesPC, struct TypePC *typesPC, 
 		printf("Данного элемента нету в списке!!!\n");
 	}
 }
+
+void EditTypePC(int *lenghtTypesPC, int lenghtLists, struct TypePC *typesPC, struct list *head)
+{
+	struct list *select = head;
+	int lenghtTPC = *lenghtTypesPC;//данные указателя lenghtTypesPC
+	printf_s("Введите индекс редактируемого элемента(отчёт начинается с 0 до %d)\n", lenghtTPC);
+	for (int i = 0; i < lenghtTPC; i++)
+	{
+		printf_s("%d)%s\n", typesPC[i].typeNum, typesPC[i].nameType);
+	}
+	int numType = -1;
+	do
+	{
+		printf("Enter of element = ");
+		scanf_s("%d", &numType);
+	} while ((numType < 1) || (numType > lenghtTPC));
+
+	printf("\nEnter of name type PC = ");
+	scanf_s("%s", typesPC[numType - 1].nameType, 10);
+
+	for (int i = 0; i < lenghtLists; i++)
+	{
+		if (select->_db.typePC.typeNum == numType)
+		{
+			for (int j = 0; j < 10; j++)
+			{
+				select->_db.typePC.nameType[j] = typesPC[numType - 1].nameType[j];
+			}
+		}
+		select = select->next;
+	}
+	printf("Editing successfully completed!!!\n");
+}
+
+struct list * AllEditTPC(struct list *head, struct TypePC *typesPC, int lenghtLists)
+{
+	struct list *select = head;
+	for (int i = 0; i < lenghtLists; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			select->_db.typePC.nameType[j] = typesPC[0].nameType[j];
+		}
+		select = select->next;
+	}
+	return head;
+}
+

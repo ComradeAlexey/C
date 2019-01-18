@@ -38,16 +38,21 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 			printf("1)Добавить элемент между элементами\n");
 			printf("2)Добавить элемент в конец списка\n");
 			printf("3)Редактировать элемент\n");
-			printf("4)Удалить элемент между элементами\n");
-			printf("5)Удалить последний в списке элемент\n");
-			printf("6)Удалить корневой элемент\n");
-			printf("7)Вывести все элементы\n");
-			printf("8)Сортировка по имени\n");
-			printf("9)Сортировка по фамилии\n");
-			printf("10)Сортировка по группе пользователя\n");
-			printf("11)Сортировка по типу ПК\n");
-			printf("12)Сортировка по имени ПК\n");
-			printf("13)Выйти\nВведите число = ");
+			printf("4)Редактировать тип ПК\n");
+			printf("5)Удалить элемент между элементами\n");
+			printf("6)Удалить последний в списке элемент\n");
+			printf("7)Удалить корневой элемент\n");
+			printf("8)Удалить полностью весь список элементов\n");
+			printf("9)Удалить тип ПК\n");
+			printf("10)Удалить все типы ПК\n");
+			printf("11)Вывести все элементы\n");
+			printf("12)Сортировка по имени\n");
+			printf("13)Сортировка по фамилии\n");
+			printf("14)Сортировка по группе пользователя\n");
+			printf("15)Сортировка по типу ПК\n");
+			printf("16)Сортировка по имени ПК\n");
+			printf("17)Сортировка по IP(в порядке возрастания суммы всех чисел в IP адресе)\n");
+			printf("18)Выйти\nВведите число = ");
 			int choice;
 			scanf_s("%d", &choice);
 			struct ListAndTypePC LATPC;
@@ -58,43 +63,64 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 				LATPC = addelem(head, lenghtLists, lenghtTypesPC, typesPC);
 				head = LATPC.list;
 				typesPC = LATPC.typePC;
+				if (*lenghtLists == 1)
+					head = AllEditTPC(head,typesPC, *lenghtLists);
 				break;
 			case 2:
 				LATPC = addElemToEnd(head, lenghtTypesPC, typesPC, lenghtLists);
 				head = LATPC.list;
 				typesPC = LATPC.typePC;
+				if(*lenghtLists == 1)
+					head = AllEditTPC(head, typesPC, *lenghtLists);
 				break;
 			case 3:
-				EditElement(head, lenghtTypesPC, typesPC, *lenghtLists-1);
+				EditElement(head, lenghtTypesPC, typesPC, *lenghtLists);
 				break;
 			case 4:
-				DeletElemAfter(head,lenghtLists);
+				EditTypePC(lenghtTypesPC, *lenghtLists, typesPC,head);
 				break;
 			case 5:
-				DeleteEndElement(head, lenghtLists);
+				DeletElemAfter(head,lenghtLists);
 				break;
 			case 6:
-				head = DeleteHead(head, lenghtLists);
+				DeleteEndElement(head, lenghtLists);
 				break;
 			case 7:
-				listPrint(head);
+				head = DeleteHead(head, lenghtLists);
 				break;
 			case 8:
-				head = AscendingSort(head, 1, lenghtLists);
+				free(head);
+				head = NULL;
+				*lenghtLists = 0;
 				break;
 			case 9:
-				head = AscendingSort(head, 2, lenghtLists);
+				head = DeleteTypePC(head, typesPC, lenghtTypesPC,lenghtLists);
 				break;
 			case 10:
-				head = AscendingSort(head, 3, lenghtLists);
+				/*typesPC = */DeleteAllTypesPC(typesPC, lenghtTypesPC);
 				break;
 			case 11:
-				head = AscendingSort(head, 5, lenghtLists);
+				listPrint(head);
 				break;
 			case 12:
-				head = AscendingSort(head, 4, lenghtLists);
+				head = AscendingSort(head, 1, lenghtLists);
 				break;
 			case 13:
+				head = AscendingSort(head, 2, lenghtLists);
+				break;
+			case 14:
+				head = AscendingSort(head, 3, lenghtLists);
+				break;
+			case 15:
+				head = AscendingSort(head, 5, lenghtLists);
+				break;
+			case 16:
+				head = AscendingSort(head, 4, lenghtLists);
+				break;
+			case 17:
+				head = AscendingSort(head, 6, lenghtLists);
+				break;
+			case 18:
 				return;
 				break;
 			}

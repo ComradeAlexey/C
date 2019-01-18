@@ -53,9 +53,18 @@ struct db ChoiceType(int lenghtTPC, struct TypePC *typesPC, struct db _db)
 
 struct TypePC *AddInListTypePC(int *lenghtTypesPC, struct TypePC *typesPC)
 {
+	
 	int i = *lenghtTypesPC;
-	i++;
-	typesPC = (struct  TypePC*)realloc(typesPC, i * sizeof(struct TypePC));
+	if (i == 0)
+	{
+		i++;
+		typesPC = (struct  TypePC*)malloc(i * sizeof(struct TypePC));
+	}
+	else
+	{
+		i++;
+		typesPC = (struct  TypePC*)realloc(typesPC, i * sizeof(struct TypePC));
+	}
 	printf("Вводите название типа ПК = ");
 	typesPC[i - 1].typeNum = i;
 	scanf_s("%s", typesPC[i - 1].nameType, 10);
