@@ -1,11 +1,11 @@
-id(0)|name_user:alexey;
-id(0)|surname_user:afinogenov
-id(0)|name_pc:pc;
-id(0)|groupe_user:cp;
+LISTS
+id(0)|name_user:a;
+id(0)|surname_user:a;
+id(0)|name_pc:a;
+id(0)|groupe_user:a;
 id(0)|IP_user:1.1.1.1;
-id(0)|nameType:one,1;id(1)|name_user:ivan;
-id(1)|surname_user:borov;
-id(1)|name_pc:cp;
-id(1)|groupe_user:pc;
-id(1)|IP_user:2.2.2.2;
-id(1)|nameType:two,2;
+id(0)|nameType:one,1;
+TYPES PC
+id(0)|nameType:one;
+id(0)|name_user:1;
+END

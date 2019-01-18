@@ -124,7 +124,7 @@ void Menu(struct list *head,int *lenghtTypesPC, int *lenghtLists,struct TypePC *
 				head = AscendingSort(head, 6, lenghtLists);
 				break;
 			case 18:
-				WriteFile(head, *lenghtLists);
+				WriteFile(head, *lenghtLists,typesPC, *lenghtTypesPC);
 				break;
 			case 19:
 				return;
